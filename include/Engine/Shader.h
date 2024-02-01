@@ -36,6 +36,7 @@ class Shader {
         void set_float(const std::string &variable, float value);
         void set_bool(const std::string &variable, bool value);
         void set_mat4(const std::string &variable, mat4 matrix);
+        void set_vec2(const std::string &variable, vec2 vector);
         void set_vec3(const std::string &variable, vec3 vector);
 
     private:

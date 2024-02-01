@@ -94,6 +94,13 @@ void Shader::set_mat4(const std::string &variable, mat4 matrix) {
     glUniformMatrix4fv(location, 1, GL_FALSE, &matrix[0][0]);
 }
 
+/* set_vec2
+ */
+void Shader::set_vec2(const std::string &variable, vec2 vector) {
+    unsigned int location = glGetUniformLocation(m_program_id, variable.c_str());
+    glUniform2fv(location, 1, &vector[0]);
+}
+
 /* set_vec3
  */
 void Shader::set_vec3(const std::string &variable, vec3 vector) {

@@ -4,6 +4,7 @@
 #include "Engine/Camera.h"
 #include "Engine/Shader.h"
 #include "Engine/DebugWindow.h"
+#include "Engine/Clock.h"
 
 // #define DEBUG_SHADOW_MAP
 
@@ -229,6 +230,9 @@ void Renderer::render(std::vector<Mesh*> &meshes, std::vector<Light*> &lights, C
         if (mesh->has_shader()) {
             if (mesh->m_shader.is_valid()) {
                 mesh->m_shader.enable();
+
+                mesh->m_shader.set_vec2("ScreenResolution", this->get_screen_size());
+                mesh->m_shader.set_float("Time", (float)Clock::instance()->get_time_ms());
             }
         }
         else {

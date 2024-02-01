@@ -45,7 +45,7 @@ class Mesh : public Component {
 
         void set_transform(Transform transform);
 
-        void set_shader(Shader shader);
+        void set_shader(Shader &shader);
         void set_texture(Texture texture);
         void set_material(Material material);
 

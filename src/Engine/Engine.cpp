@@ -1,26 +1,20 @@
 #include "Engine/Engine.h"
 
+#include "Engine/Clock.h"
+
 
 /* Engine
  */
-Engine::Engine():
-m_renderer(SCREEN_WIDTH, SCREEN_HEIGHT, ""),
+Engine::Engine(int width, int height, const std::string &path):
+m_renderer(width, height, path),
 p_camera(new Camera(vec3(0, 0, 0))),
 p_input_manager(InputManager::get_instance())
 {
 
 }
 
-/* Engine
+/* ~Engine
  */
-Engine::Engine(const std::string &path):
-m_renderer(SCREEN_WIDTH, SCREEN_HEIGHT, path),
-p_camera(new Camera(vec3(0, 0, 0))),
-p_input_manager(InputManager::get_instance())
-{
-
-}
-
 Engine::~Engine() {
 
 }
@@ -41,6 +35,9 @@ bool Engine::init() {
 
     m_renderer.set_mouse_button_callback(this->_process_mouse_button);
     m_renderer.set_mouse_callback(this->_process_mouse_input);
+
+    // Start clock
+    Clock::instance()->init();
 
     return true;
 }

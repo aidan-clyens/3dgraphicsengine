@@ -2,13 +2,12 @@
 
 
 float square_vertices[] = {
-    // front face
-    -0.5f, 0.5f, 0.0f,
-    -0.5f, -0.5f, 0.0f,
-    0.5f, -0.5f, 0.0f,
-    -0.5f, 0.5f, 0.0f,
-    0.5f, -0.5f, 0.0f,
-    0.5f, 0.5f, 0.0f
+   -1.0f, -1.0f, 0.0f,  // Bottom-left
+    1.0f, -1.0f, 0.0f,  // Bottom-right
+   -1.0f,  1.0f, 0.0f,  // Top-left
+    1.0f, -1.0f, 0.0f,  // Bottom-right
+    1.0f,  1.0f, 0.0f,  // Top-right
+   -1.0f,  1.0f, 0.0f   // Top-left
 };
 
 float square_normals[] = {
@@ -22,13 +21,12 @@ float square_normals[] = {
 };
 
 float square_uvs[] = {
-    // front face
-    0.0f, 1.0f,
-    0.0f, 0.0f,
-    1.0f, 0.0f,
-    0.0f, 1.0f,
-    1.0f, 0.0f,
-    1.0f, 1.0f
+    0.0f, 0.0f,  // Bottom-left
+    1.0f, 0.0f,  // Bottom-right
+    0.0f, 1.0f,  // Top-left
+    1.0f, 0.0f,  // Bottom-right
+    1.0f, 1.0f,  // Top-right
+    0.0f, 1.0f   // Top-left
 };
 
 /* SquareMesh

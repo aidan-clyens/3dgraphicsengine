@@ -184,7 +184,7 @@ void Mesh::set_transform(Transform transform) {
 
 /* set_shader
  */
-void Mesh::set_shader(Shader shader) {
+void Mesh::set_shader(Shader &shader) {
     m_shader = shader;
     m_use_shader = true;
 }

@@ -60,6 +60,8 @@ class Renderer {
 
         GLFWwindow *get_window();
 
+        vec2 get_screen_size() const { return vec2(m_width, m_height); }
+
     private:
         void on_key_pressed(GLFWwindow *p_window, int key, int scancode, int action, int mods);
 

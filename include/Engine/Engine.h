@@ -26,8 +26,8 @@
  */
 class Engine : public EntityManager {
     public:
-        Engine();
-        Engine(const std::string &path);
+        // Engine();
+        Engine(int width=SCREEN_WIDTH, int height=SCREEN_HEIGHT, const std::string &path="");
         virtual ~Engine();
 
         bool init();
