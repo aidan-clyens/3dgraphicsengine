@@ -3,7 +3,7 @@ project(EngineCore)
 add_subdirectory(ECS)
 
 set(SOURCES
-    Engine.cpp Object3D.cpp Renderer.cpp InputManager.cpp Camera.cpp Shader.cpp Texture.cpp Texture2D.cpp DepthTexture.cpp TextureCubeMap.cpp SquareMesh.cpp CubeMesh.cpp Physics.cpp Light.cpp DebugWindow.cpp utils/load_image.cpp utils/Timer.cpp
+    Engine.cpp Object3D.cpp Renderer.cpp InputManager.cpp Camera.cpp Shader.cpp Texture.cpp Texture2D.cpp DepthTexture.cpp TextureCubeMap.cpp SquareMesh.cpp CubeMesh.cpp Physics.cpp Light.cpp Clock.cpp DebugWindow.cpp utils/load_image.cpp utils/Timer.cpp
 )
 
 set(THIRDPARTY_DIR ../../thirdparty)
