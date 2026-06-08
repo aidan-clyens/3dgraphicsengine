@@ -1,4 +1,4 @@
-#include "Engine/utils/load_image.h"
+#include "LoadImage.h"
 
 #ifndef STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION

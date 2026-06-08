@@ -1,7 +1,7 @@
 #pragma once
 
 // Includes
-#include "Engine/utils/types.h"
+#include "Types.h"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"

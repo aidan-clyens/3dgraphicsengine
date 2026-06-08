@@ -1,5 +1,5 @@
-#include "Engine/Texture.h"
-#include "Engine/utils/load_image.h"
+#include "Texture.h"
+#include "LoadImage.h"
 
 
 /* Texture

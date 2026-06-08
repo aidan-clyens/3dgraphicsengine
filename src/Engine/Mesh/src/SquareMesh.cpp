@@ -1,4 +1,4 @@
-#include "Engine/SquareMesh.h"
+#include "SquareMesh.h"
 
 
 float square_vertices[] = {

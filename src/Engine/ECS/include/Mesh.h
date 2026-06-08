@@ -9,9 +9,9 @@
 #include <iterator>
 
 #include "ECS.h"
-#include "Engine/utils/types.h"
+#include "Types.h"
 #include "Engine/Shader.h"
-#include "Engine/Texture.h"
+#include "Texture.h"
 
 
 typedef struct {

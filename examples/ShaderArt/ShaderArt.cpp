@@ -1,6 +1,6 @@
 // Includes
 #include "Engine/Engine.h"
-#include "Engine/SquareMesh.h"
+#include "SquareMesh.h"
 #include "Engine/Object3D.h"
 
 #include <iostream>

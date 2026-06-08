@@ -2,7 +2,7 @@
 #include "Engine/Engine.h"
 #include "Mesh.h"
 #include "Model.h"
-#include "Engine/CubeMesh.h"
+#include "CubeMesh.h"
 #include "Engine/Light.h"
 #include "Engine/Camera.h"
 

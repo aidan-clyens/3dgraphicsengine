@@ -3,7 +3,7 @@
 // Includes
 #include "ECS.h"
 #include "Rigidbody.h"
-#include "Engine/utils/types.h"
+#include "Types.h"
 #include "Engine/Object3D.h"
 
 #include "btBulletDynamicsCommon.h"

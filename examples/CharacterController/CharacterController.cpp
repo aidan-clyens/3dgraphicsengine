@@ -1,8 +1,8 @@
 // Includes
 #include "Engine/Engine.h"
-#include "Engine/CubeMesh.h"
+#include "CubeMesh.h"
 #include "Engine/Shader.h"
-#include "Engine/Texture2D.h"
+#include "Texture2D.h"
 #include "Mesh.h"
 #include "Rigidbody.h"
 #include "DynamicCharacterController.h"

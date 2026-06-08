@@ -2,7 +2,7 @@
 
 // Includes
 #include "ECS.h"
-#include "Engine/utils/types.h"
+#include "Types.h"
 
 // Enums
 /* ePointLightDistance

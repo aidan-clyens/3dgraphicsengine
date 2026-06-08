@@ -1,9 +1,21 @@
 project(EngineCore)
 
+add_subdirectory(Core)
 add_subdirectory(ECS)
+add_subdirectory(Texture)
+add_subdirectory(Mesh)
 
 set(SOURCES
-    Engine.cpp Object3D.cpp Renderer.cpp InputManager.cpp Camera.cpp Shader.cpp Texture.cpp Texture2D.cpp DepthTexture.cpp TextureCubeMap.cpp SquareMesh.cpp CubeMesh.cpp Physics.cpp Light.cpp Clock.cpp DebugWindow.cpp utils/load_image.cpp utils/Timer.cpp
+    src/Engine.cpp
+    src/Object3D.cpp
+    src/Renderer.cpp
+    src/InputManager.cpp
+    src/Camera.cpp
+    src/Shader.cpp
+    src/Physics.cpp
+    src/Light.cpp
+    src/Clock.cpp
+    src/DebugWindow.cpp
 )
 
 set(THIRDPARTY_DIR ../../thirdparty)
@@ -24,4 +36,5 @@ target_include_directories(${PROJECT_NAME} PUBLIC ../../include)
 target_include_directories(${PROJECT_NAME} PUBLIC ${THIRDPARTY_DIR}/)
 target_include_directories(${PROJECT_NAME} PUBLIC ${IMGUI_DIR})
 target_include_directories(${PROJECT_NAME} PUBLIC ${IMGUI_DIR}/backends)
-target_link_libraries(${PROJECT_NAME} ECS glfw glad::glad glm::glm assimp::assimp BulletDynamics BulletCollision LinearMath ${GLFW_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} Core ECS Texture Mesh)
+target_link_libraries(${PROJECT_NAME} glfw glad::glad glm::glm assimp::assimp BulletDynamics BulletCollision LinearMath ${GLFW_LIBRARIES})

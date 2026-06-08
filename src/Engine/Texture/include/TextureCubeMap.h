@@ -1,9 +1,9 @@
 #pragma once
 
 // Includes
-#include "Engine/utils/types.h"
-#include "Engine/utils/load_image.h"
-#include "Engine/Texture.h"
+#include "Types.h"
+#include "LoadImage.h"
+#include "Texture.h"
 
 #include <vector>
 

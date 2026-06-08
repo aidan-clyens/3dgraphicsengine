@@ -4,7 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "ECS.h"
-#include "Engine/utils/types.h"
+#include "Types.h"
 
 
 class Renderer;

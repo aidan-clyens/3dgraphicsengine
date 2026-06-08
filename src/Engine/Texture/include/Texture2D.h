@@ -1,8 +1,8 @@
 #pragma once
 
 // Includes
-#include "Engine/utils/types.h"
-#include "Engine/Texture.h"
+#include "Types.h"
+#include "Texture.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

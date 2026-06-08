@@ -1,4 +1,4 @@
-project(ECS)
+project(Texture)
 
 add_library(${PROJECT_NAME} STATIC)
 
@@ -8,21 +8,17 @@ target_sources(${PROJECT_NAME}
     BASE_DIRS
       ${CMAKE_CURRENT_SOURCE_DIR}/include
     FILES
-        include/DynamicCharacterController.h
-        include/ECS.h
-        include/Mesh.h
-        include/MeshInstances.h
-        include/Model.h
-        include/Rigidbody.h
+        include/DepthTexture.h
+        include/Texture.h
+        include/Texture2D.h
+        include/TextureCubeMap.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
-    src/DynamicCharacterController.cpp
-    src/ECS.cpp
-    src/Mesh.cpp
-    src/MeshInstances.cpp
-    src/Model.cpp
-    src/Rigidbody.cpp
+  src/DepthTexture.cpp
+  src/Texture.cpp
+  src/Texture2D.cpp
+  src/TextureCubeMap.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -31,10 +27,11 @@ target_include_directories(${PROJECT_NAME}
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC
+target_link_libraries(${PROJECT_NAME} PRIVATE
   Core
-  Texture
+  ECS
 )
+
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
     glfw glad::glad glm::glm assimp::assimp BulletDynamics BulletCollision LinearMath ${GLFW_LIBRARIES}

@@ -8,9 +8,9 @@
 #include <iostream>
 #include <vector>
 
-#include "Engine/utils/types.h"
+#include "Types.h"
 #include "Engine/Shader.h"
-#include "Engine/DepthTexture.h"
+#include "DepthTexture.h"
 #include "Engine/Light.h"
 #include "Engine/Object3D.h"
 

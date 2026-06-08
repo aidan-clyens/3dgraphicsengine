@@ -1,7 +1,7 @@
 #pragma once
 
 // Includes
-#include "Engine/utils/types.h"
+#include "Types.h"
 #include "ECS.h"
 #include "Mesh.h"
 #include "Engine/Light.h"

@@ -1,4 +1,4 @@
-#include "Engine/CubeMesh.h"
+#include "CubeMesh.h"
 
 
 float vertices[] = {

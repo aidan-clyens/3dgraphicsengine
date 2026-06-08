@@ -1,13 +1,13 @@
 // Includes
 #include "Engine/Engine.h"
-#include "Engine/SquareMesh.h"
-#include "Engine/CubeMesh.h"
+#include "SquareMesh.h"
+#include "CubeMesh.h"
 #include "Engine/Shader.h"
-#include "Engine/Texture2D.h"
-#include "Engine/TextureCubeMap.h"
+#include "Texture2D.h"
+#include "TextureCubeMap.h"
 #include "Engine/Light.h"
 #include "Mesh.h"
-#include "Engine/utils/Timer.h"
+#include "Timer.h"
 
 #include <iostream>
 
