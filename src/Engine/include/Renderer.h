@@ -9,10 +9,10 @@
 #include <vector>
 
 #include "Types.h"
-#include "Engine/Shader.h"
+#include "Shader.h"
 #include "DepthTexture.h"
-#include "Engine/Light.h"
-#include "Engine/Object3D.h"
+#include "Light.h"
+#include "Object3D.h"
 
 // Forward declarations
 class Engine;

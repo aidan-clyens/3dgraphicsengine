@@ -4,7 +4,7 @@
 #include "ECS.h"
 #include "Rigidbody.h"
 #include "Types.h"
-#include "Engine/Object3D.h"
+#include "Object3D.h"
 
 #include "btBulletDynamicsCommon.h"
 

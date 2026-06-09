@@ -1,5 +1,5 @@
-#include "Engine/Object3D.h"
-#include "Engine/Camera.h"
+#include "Object3D.h"
+#include "Camera.h"
 
 
 /* Object3D
@@ -48,12 +48,6 @@ vec3 Object3D::get_size() const {
     return m_transform.size;
 }
 
-/* get_transform
- */
-Transform Object3D::get_transform() const {
-    return m_transform;
-}
-
 /* set_position
  */
 void Object3D::set_position(vec3 position) {
@@ -73,17 +67,6 @@ void Object3D::set_rotation(vec3 rotation) {
 void Object3D::set_size(vec3 size) {
     m_transform.size = size;
     this->set_transform(m_transform);
-}
-
-/* set_transform
- */
-void Object3D::set_transform(Transform transform) {
-    m_transform = transform;
-
-    ComponentMapIterator it;
-    for (it = m_components.begin(); it != m_components.end(); it++) {
-        it->second->set_transform(transform);
-    }
 }
 
 /* get_name

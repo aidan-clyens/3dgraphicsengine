@@ -135,10 +135,10 @@ First-person character movement with physics.
 
 ```
 3D-graphics-engine/
-├── include/Engine/        # Public API headers
+├── include/        # Public API headers
 │   ├── ECS/              # Component system
 │   └── utils/            # Utility functions
-├── src/Engine/           # Engine implementation
+├── src/           # Engine implementation
 ├── examples/             # Sample applications
 ├── shaders/              # GLSL shader programs
 ├── textures/             # Sample textures

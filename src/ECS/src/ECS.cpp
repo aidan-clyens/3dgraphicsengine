@@ -81,3 +81,20 @@ bool Entity::has_component(int id) {
 void Entity::assign_entity_manager(EntityManager *manager) {
     p_entity_manager = manager;
 }
+
+/* get_transform
+ */
+Transform Entity::get_transform() const {
+    return m_transform;
+}
+
+/* set_transform
+ */
+void Entity::set_transform(Transform transform) {
+    m_transform = transform;
+
+    ComponentMapIterator it;
+    for (it = m_components.begin(); it != m_components.end(); it++) {
+        it->second->set_transform(transform);
+    }
+}

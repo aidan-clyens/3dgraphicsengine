@@ -1,4 +1,4 @@
-project(Core)
+project(Mesh)
 
 add_library(${PROJECT_NAME} STATIC)
 
@@ -8,14 +8,13 @@ target_sources(${PROJECT_NAME}
     BASE_DIRS
       ${CMAKE_CURRENT_SOURCE_DIR}/include
     FILES
-        include/LoadImage.h
-        include/Timer.h
-        include/Types.h
+        include/CubeMesh.h
+        include/SquareMesh.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
-    src/LoadImage.cpp
-    src/Timer.cpp
+    src/CubeMesh.cpp
+    src/SquareMesh.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -25,11 +24,8 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-  Texture
-)
-
-target_link_libraries(${PROJECT_NAME} PUBLIC
-    glfw glad::glad glm::glm assimp::assimp BulletDynamics BulletCollision LinearMath ${GLFW_LIBRARIES}
+  Core
+  ECS
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)

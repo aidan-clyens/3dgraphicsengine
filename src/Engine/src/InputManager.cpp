@@ -1,4 +1,4 @@
-#include "Engine/InputManager.h"
+#include "InputManager.h"
 
 
 InputManager *InputManager::p_instance = 0;

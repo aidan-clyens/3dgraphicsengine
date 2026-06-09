@@ -1,10 +1,10 @@
-#include "Engine/Renderer.h"
+#include "Renderer.h"
 
 #include "Mesh.h"
-#include "Engine/Camera.h"
-#include "Engine/Shader.h"
-#include "Engine/DebugWindow.h"
-#include "Engine/Clock.h"
+#include "Camera.h"
+#include "Shader.h"
+#include "DebugWindow.h"
+#include "Clock.h"
 
 // #define DEBUG_SHADOW_MAP
 

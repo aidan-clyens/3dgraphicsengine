@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ECS.h"
-#include "Engine/Object3D.h"
 
 #include "btBulletDynamicsCommon.h"
 #include "btBulletCollisionCommon.h"
@@ -17,7 +16,7 @@ class Physics;
  */
 class Rigidbody : public Component {
     public:
-        Rigidbody(Object3D *object, float mass, bool dynamic=false);
+        Rigidbody(Entity *object, float mass, bool dynamic = false);
         virtual ~Rigidbody();
 
         virtual void update(float delta_time);
@@ -36,7 +35,7 @@ class Rigidbody : public Component {
         Physics *p_physics_world;
 
         btScalar m_mass;
-        Object3D *p_object;
+        Entity *p_object;
         btTransform m_transform;
         btDefaultMotionState *p_motion_state;
         btRigidBody *p_body;

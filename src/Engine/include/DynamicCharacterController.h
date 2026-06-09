@@ -1,9 +1,9 @@
 #pragma once
 
 // Includes
+#include "ECS.h"
 #include "Rigidbody.h"
-#include "Engine/Object3D.h"
-#include "Engine/Camera.h"
+#include "Camera.h"
 
 #include <glm/glm.hpp>
 
@@ -46,7 +46,7 @@ class IgnoreBodyAndGhostCast : public btCollisionWorld::ClosestRayResultCallback
  */
 class DynamicCharacterController : public Rigidbody {
     public:
-        DynamicCharacterController(Object3D *object, float mass);
+        DynamicCharacterController(Entity *object, float mass);
 
         void move(vec2 direction);
         void jump();

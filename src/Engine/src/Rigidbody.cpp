@@ -1,10 +1,10 @@
 #include "Rigidbody.h"
-#include "Engine/Physics.h"
+#include "Physics.h"
 
 
 /* Rigidbody
  */
-Rigidbody::Rigidbody(Object3D *object, float mass, bool dynamic):
+Rigidbody::Rigidbody(Entity *object, float mass, bool dynamic):
 p_object(object),
 m_mass(btScalar(mass)),
 m_is_dynamic(dynamic)

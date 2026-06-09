@@ -1,4 +1,4 @@
-project(Texture)
+project(Core)
 
 add_library(${PROJECT_NAME} STATIC)
 
@@ -8,17 +8,14 @@ target_sources(${PROJECT_NAME}
     BASE_DIRS
       ${CMAKE_CURRENT_SOURCE_DIR}/include
     FILES
-        include/DepthTexture.h
-        include/Texture.h
-        include/Texture2D.h
-        include/TextureCubeMap.h
+        include/LoadImage.h
+        include/Timer.h
+        include/Types.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
-  src/DepthTexture.cpp
-  src/Texture.cpp
-  src/Texture2D.cpp
-  src/TextureCubeMap.cpp
+    src/LoadImage.cpp
+    src/Timer.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -28,13 +25,7 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-  Core
-  ECS
-)
-
-
-target_link_libraries(${PROJECT_NAME} PUBLIC
-    glfw glad::glad glm::glm assimp::assimp BulletDynamics BulletCollision LinearMath ${GLFW_LIBRARIES}
+    glm::glm
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)

@@ -1,11 +1,11 @@
 #include "DynamicCharacterController.h"
-#include "Engine/Physics.h"
+#include "Physics.h"
 
 #include <iostream>
 
 /* DynamicCharacterController
  */
-DynamicCharacterController::DynamicCharacterController(Object3D *object, float mass):
+DynamicCharacterController::DynamicCharacterController(Entity *object, float mass):
 Rigidbody(object, mass, true),
 m_velocity(0, 0, 0),
 m_previous_position(0, 0, 0),

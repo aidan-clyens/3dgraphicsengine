@@ -1,4 +1,4 @@
-#include "Engine/Light.h"
+#include "Light.h"
 
 // Data
 // constant, linear, quadratic

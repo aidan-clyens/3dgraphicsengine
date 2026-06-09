@@ -5,13 +5,13 @@
 #include "ECS.h"
 #include "Mesh.h"
 #include "Model.h"
-#include "Engine/Renderer.h"
-#include "Engine/Object3D.h"
-#include "Engine/Camera.h"
-#include "Engine/InputManager.h"
-#include "Engine/Physics.h"
-#include "Engine/Light.h"
-#include "Engine/DebugWindow.h"
+#include "Renderer.h"
+#include "Object3D.h"
+#include "Camera.h"
+#include "InputManager.h"
+#include "Physics.h"
+#include "Light.h"
+#include "DebugWindow.h"
 
 #include <string>
 #include <vector>

@@ -1,7 +1,7 @@
 // Includes
-#include "Engine/Engine.h"
+#include "Engine.h"
 #include "SquareMesh.h"
-#include "Engine/Object3D.h"
+#include "Object3D.h"
 
 #include <iostream>
 

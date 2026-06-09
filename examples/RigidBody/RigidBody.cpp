@@ -1,7 +1,7 @@
 // Includes
-#include "Engine/Engine.h"
+#include "Engine.h"
 #include "CubeMesh.h"
-#include "Engine/Shader.h"
+#include "Shader.h"
 #include "Texture2D.h"
 #include "Mesh.h"
 #include "Rigidbody.h"

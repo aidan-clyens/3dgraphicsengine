@@ -1,10 +1,10 @@
-#include "Engine/DebugWindow.h"
-#include "Engine/Engine.h"
+#include "DebugWindow.h"
+#include "Engine.h"
 #include "Mesh.h"
 #include "Model.h"
 #include "CubeMesh.h"
-#include "Engine/Light.h"
-#include "Engine/Camera.h"
+#include "Light.h"
+#include "Camera.h"
 
 
 #define BUTTON_SIZE ImVec2(100, 25)

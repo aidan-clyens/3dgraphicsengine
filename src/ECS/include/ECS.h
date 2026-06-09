@@ -67,7 +67,12 @@ class Entity {
 
         void assign_entity_manager(EntityManager *manager);
 
+        Transform get_transform() const;
+        void set_transform(Transform transform);
+
     protected:
         EntityManager *p_entity_manager;
         ComponentMap m_components;
+
+        Transform m_transform;
 };
