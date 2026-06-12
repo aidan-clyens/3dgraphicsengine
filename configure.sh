@@ -1,6 +1,6 @@
 set -eux;
 apt-get update;
-apt-get upgrade;
+apt-get upgrade -y;
 apt-get install -y --no-install-recommends \
   ca-certificates \
   gpg \
