@@ -1,9 +1,6 @@
 [submodule "thirdparty/imgui"]
 	path = thirdparty/imgui
 	url = git@github.com:ocornut/imgui.git
-[submodule "thirdparty/glad"]
-	path = thirdparty/glad
-	url = git@github.com:Dav1dde/glad.git
 [submodule "thirdparty/glm"]
 	path = thirdparty/glm
 	url = git@github.com:icaven/glm.git

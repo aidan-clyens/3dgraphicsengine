@@ -22,6 +22,10 @@ endif()
 # Find required packages
 find_package(PkgConfig)
 
+add_subdirectory(thirdparty/glad)
+add_subdirectory(thirdparty/glm)
+add_subdirectory(thirdparty/bullet3)
+
 if(WIN32)
     find_package(glfw3 CONFIG REQUIRED)
     find_package(GTest CONFIG REQUIRED)
@@ -31,8 +35,11 @@ if(WIN32)
     find_package(Bullet CONFIG REQUIRED)
     find_package(imgui CONFIG REQUIRED)
 else()
-    # if(PkgConfig_FOUND)
-    # endif()
+    if(PkgConfig_FOUND)
+        pkg_check_modules(glfw3 REQUIRED IMPORTED_TARGET glfw3)
+        pkg_check_modules(assimp REQUIRED IMPORTED_TARGET assimp)
+    endif()
+    find_package(GTest REQUIRED)
 endif()
 
 add_subdirectory(src)
@@ -50,6 +57,12 @@ install(
         ECS
         Texture
         Mesh
+        glad
+        glm
+        glm-header-only
+        BulletDynamics
+        BulletCollision
+        LinearMath
     EXPORT ${PROJECT_NAME}-targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
