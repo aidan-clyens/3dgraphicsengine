@@ -4,9 +4,9 @@
 /* Mesh
  */
 Mesh::Mesh():
+m_num_vertices(0),
 m_use_shader(false),
 m_use_texture(false),
-m_num_vertices(0),
 m_material_type(MATERIAL_COLOR)
 {
     this->init_mesh();
@@ -15,9 +15,9 @@ m_material_type(MATERIAL_COLOR)
 /* Mesh
  */
 Mesh::Mesh(std::vector<Vertex> vertices):
+m_num_vertices(vertices.size()),
 m_use_shader(false),
 m_use_texture(false),
-m_num_vertices(vertices.size()),
 m_material_type(MATERIAL_COLOR)
 {
     m_vertices = vertices;
@@ -253,7 +253,7 @@ unsigned int Mesh::get_num_vertices() const {
 /* dump_vertices
  */
 void Mesh::dump_vertices() {
-    for (int i = 0; i < m_vertices.size(); i++) {
+    for (unsigned int i = 0; i < m_vertices.size(); i++) {
         std::cout << m_vertices[i].vertex.x << ", " << m_vertices[i].vertex.y << ", " << m_vertices[i].vertex.z << "," << std::endl;
     }
     std::cout << std::endl;
@@ -262,7 +262,7 @@ void Mesh::dump_vertices() {
 /* dump_normals
  */
 void Mesh::dump_normals() {
-    for (int i = 0; i < m_vertices.size(); i++) {
+    for (unsigned int i = 0; i < m_vertices.size(); i++) {
         std::cout << m_vertices[i].normal.x << ", " << m_vertices[i].normal.y << ", " << m_vertices[i].normal.z << "," << std::endl;
     }
     std::cout << std::endl;

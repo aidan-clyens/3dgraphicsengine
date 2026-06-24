@@ -22,7 +22,7 @@ Model::~Model() {
 void Model::set_transform(Transform transform) {
     Component::set_transform(transform);
 
-    for (int i = 0; i < m_meshes.size(); i++) {
+    for (unsigned int i = 0; i < m_meshes.size(); i++) {
         m_meshes[i]->set_transform(transform);
     }
 }
@@ -67,6 +67,8 @@ void Model::process_node(const aiNode *node, const aiScene *scene) {
 /* process_mesh
  */
 Mesh *Model::process_mesh(const aiMesh *mesh, const aiScene *scene) {
+    (void)scene; // Unused
+
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
 
@@ -103,10 +105,7 @@ Mesh *Model::process_mesh(const aiMesh *mesh, const aiScene *scene) {
         }
     }
 
-    // process material
-    if (mesh->mMaterialIndex >= 0) {
-        // [...]
-    }
+    // TODO - process material
 
     return new Mesh(vertices);
 }

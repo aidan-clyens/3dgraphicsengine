@@ -160,7 +160,7 @@ CubeMesh::CubeMesh() {
     m_num_vertices = sizeof(vertices) / (sizeof(float) * 3.0);
     std::cout << "num vertices: " << sizeof(vertices) / (sizeof(float) * 3.0) << std::endl;
 
-    for (int i = 0; i < m_num_vertices; i++) {
+    for (unsigned int i = 0; i < m_num_vertices; i++) {
         Vertex vertex;
 
         vertex.vertex = vec3(

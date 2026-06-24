@@ -51,6 +51,7 @@ target_include_directories(${PROJECT_NAME}
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/thirdparty/imgui>
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/thirdparty/imgui/backends>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/thirdparty/bullet3/src>
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
