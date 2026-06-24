@@ -7,6 +7,9 @@ ARG ENABLE_RC=false
 ENV DEBIAN_FRONTEND=noninteractive \
     PATH="/opt/venv/bin:$PATH"
 
+RUN apt-get update; \
+    apt-get upgrade -y;
+
 COPY configure.sh ./configure.sh
 RUN bash ./configure.sh
 

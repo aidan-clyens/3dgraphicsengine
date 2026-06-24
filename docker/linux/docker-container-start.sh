@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-readonly IMAGE="ghcr.io/aidan-clyens/3dgraphicsengine-dev:latest"
+readonly IMAGE="$1"
 readonly PLATFORM="linux/amd64"
 readonly CONTAINER_NAME="3dgraphicsengine"
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -22,15 +22,15 @@ fi
 
 docker create -it --init --platform="${PLATFORM}" \
 	--name "${CONTAINER_NAME}" \
-	-v "${REPO_ROOT}:${CONTAINER_HOME}/3dgraphicsengine" \
+	-v "${REPO_ROOT}:${CONTAINER_HOME}/${CONTAINER_NAME}" \
 	-v "${HOME}/.ssh:/root/.ssh" \
 	-v "/tmp/.X11-unix:/tmp/.X11-unix" \
 	-v /mnt/wslg/:/mnt/wslg/ \
-	-w "${CONTAINER_HOME}/3dgraphicsengine" \
+	-w "${CONTAINER_HOME}/${CONTAINER_NAME}" \
 	"${IMAGE}" \
 	tail -f /dev/null
 
 docker start "${CONTAINER_NAME}"
+docker container inspect "${CONTAINER_NAME}"
 
 echo "Created container '${CONTAINER_NAME}' from ${IMAGE}."
-
