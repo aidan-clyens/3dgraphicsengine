@@ -1,0 +1,46 @@
+version: 0.2
+
+env:
+  variables:
+    CONFIGURE_PRESET: ubuntu-release
+    PACKAGE_PRESET: ubuntu-release
+
+phases:
+  install:
+    on-failure: ABORT
+    commands:
+      # The build image already contains all system dependencies.
+      # Nothing extra to install at this stage.
+      - echo "Build environment ready"
+
+  pre_build:
+    on-failure: ABORT
+    commands:
+      - echo "Configuring CMake (${CONFIGURE_PRESET})..."
+      - cmake --preset ${CONFIGURE_PRESET}
+
+  build:
+    on-failure: ABORT
+    commands:
+      - echo "Building (${CONFIGURE_PRESET})..."
+      - cmake --build build --parallel $(nproc)
+
+  post_build:
+    on-failure: ABORT
+    commands:
+      - echo "Build completed successfully. Packaging artifacts..."
+      - cpack --preset ${PACKAGE_PRESET} --verbose
+      - echo "Generated packages:"
+      - ls -1 build/debian/*deb
+
+reports:
+  unit-test-report:
+    files:
+      - "test-results/unit-tests.xml"
+    file-format: JUNITXML
+
+artifacts:
+  files:
+    - build/debian/*deb
+    - build/CPackConfig.cmake
+  discard-paths: yes
