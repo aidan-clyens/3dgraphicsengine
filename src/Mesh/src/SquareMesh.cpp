@@ -1,5 +1,7 @@
 #include "SquareMesh.h"
 
+#include <cstring>
+
 
 float square_vertices[] = {
    -1.0f, -1.0f, 0.0f,  // Bottom-left

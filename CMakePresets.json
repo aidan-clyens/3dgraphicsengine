@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 6,
   "configurePresets": [
     {
       "name": "windows-base",
@@ -11,7 +11,11 @@
         "CMAKE_TOOLCHAIN_FILE": "C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
         "BUILD_TESTS": "ON",
         "BUILD_EXAMPLES": "ON",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "BUILD_OPENGL3_DEMOS": "OFF",
+        "BUILD_BULLET2_DEMOS": "OFF",
+        "BUILD_EXTRAS": "OFF",
+        "BUILD_UNIT_TESTS": "OFF"
       }
     },
     {
@@ -22,7 +26,11 @@
         "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchains/ubuntu.cmake",
         "BUILD_TESTS": "ON",
         "BUILD_EXAMPLES": "ON",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "BUILD_OPENGL3_DEMOS": "OFF",
+        "BUILD_BULLET2_DEMOS": "OFF",
+        "BUILD_EXTRAS": "OFF",
+        "BUILD_UNIT_TESTS": "OFF"
       }
     },
     {
@@ -79,6 +87,16 @@
         "CMAKE_BUILD_TYPE": "Debug",
         "BUILD_TESTS": "ON"
       }
+    },
+    {
+      "name": "ubuntu-release",
+      "displayName": "Ubuntu x64 Release",
+      "inherits": "ubuntu-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_TESTS": "OFF",
+        "BUILD_EXAMPLES": "ON"
+      }
     }
   ],
   "buildPresets": [
@@ -117,6 +135,12 @@
       "displayName": "Ubuntu Debug Build",
       "configurePreset": "ubuntu-debug",
       "configuration": "Debug"
+    },
+    {
+      "name": "ubuntu-release",
+      "displayName": "Ubuntu Release Build",
+      "configurePreset": "ubuntu-release",
+      "configuration": "Release"
     }
   ],
   "testPresets": [
@@ -131,6 +155,30 @@
       "description": "",
       "displayName": "Ubuntu x86 Debug Tests",
       "configurePreset": "ubuntu-debug"
+    }
+  ],
+  "packagePresets": [
+    {
+      "name": "ubuntu-release",
+      "displayName": "Ubuntu Release Package",
+      "configurePreset": "ubuntu-release",
+      "packageDirectory": "debian",
+      "packageName": "lib3Dgraphicsengine",
+      "vendorName": "Aidan Clyens",
+      "generators": [
+        "DEB"
+      ]
+    },
+    {
+      "name": "windows-release",
+      "displayName": "Windows Release Package",
+      "configurePreset": "windows-release",
+      "packageDirectory": "windows-package",
+      "packageName": "lib3Dgraphicsengine",
+      "vendorName": "Aidan Clyens",
+      "generators": [
+        "NSIS"
+      ]
     }
   ]
 }

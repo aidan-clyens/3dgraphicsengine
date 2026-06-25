@@ -1,5 +1,6 @@
 #include "MeshInstances.h"
 
+#include <cstring>
 
 /* MeshInstances
  */
@@ -40,7 +41,7 @@ m_instance(instance)
 MeshInstances::MeshInstances(Mesh *instance, std::vector<Transform> transforms):
 m_instance(instance)
 {
-    for (int i = 0; i < transforms.size(); i++) {
+    for (unsigned int i = 0; i < transforms.size(); i++) {
         // Create transformations
         mat4 model = mat4(1.0);
 

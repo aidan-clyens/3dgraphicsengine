@@ -15,14 +15,14 @@ void TextureCubeMap::load(std::vector<std::string> faces_files_paths) {
     int texture_width, texture_height, num_channels;
     std::vector<unsigned char *> faces;
 
-    for (int i = 0; i < faces_files_paths.size(); i++) {
+    for (unsigned int i = 0; i < faces_files_paths.size(); i++) {
         unsigned char *texture_data = load_image_data(faces_files_paths[i], &texture_width, &texture_height, &num_channels);
         faces.push_back(texture_data);
     }
 
     this->load(faces, texture_width, texture_height, num_channels);
 
-    for (int i = 0; i < faces_files_paths.size(); i++) {
+    for (unsigned int i = 0; i < faces_files_paths.size(); i++) {
         free_image_data((unsigned char *)faces[i]);
     }
 }
@@ -49,7 +49,7 @@ void TextureCubeMap::load(std::vector<unsigned char*> faces, int width, int heig
         format = GL_RGBA;
     }
 
-    for (int i = 0; i < faces.size(); i++) {
+    for (unsigned int i = 0; i < faces.size(); i++) {
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, format, m_texture_width, m_texture_height, 0, format, GL_UNSIGNED_BYTE, faces[i]);
     }
 

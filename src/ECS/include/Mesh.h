@@ -16,7 +16,7 @@
 
 typedef struct {
     float *data;
-    unsigned int size;
+    size_t size;
     unsigned int stride;
 } Buffer;
 

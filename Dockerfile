@@ -1,0 +1,18 @@
+# Use the latest stable Ubuntu image
+FROM ubuntu:26.04
+
+ARG ENABLE_RC=false
+
+# Set non-interactive mode for apt-get
+ENV DEBIAN_FRONTEND=noninteractive \
+    PATH="/opt/venv/bin:$PATH"
+
+RUN apt-get update; \
+    apt-get upgrade -y;
+
+COPY configure.sh ./configure.sh
+RUN bash ./configure.sh
+
+# Default command
+COPY docker/entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]

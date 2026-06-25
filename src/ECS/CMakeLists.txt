@@ -29,6 +29,7 @@ target_include_directories(${PROJECT_NAME}
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/thirdparty>
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
@@ -36,7 +37,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
-    glfw glad::glad glm::glm assimp::assimp ${GLFW_LIBRARIES}
+    glfw glad glm assimp ${GLFW_LIBRARIES}
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
