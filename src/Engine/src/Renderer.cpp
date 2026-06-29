@@ -50,7 +50,7 @@ bool Renderer::init(Engine *engine) {
     // Make the current window's context current
     glfwMakeContextCurrent(p_window);
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    if (!gladLoadGL(glfwGetProcAddress)) {
         std::cerr << "Failed to init GLAD" << std::endl;
         glfwTerminate();
         return false;
