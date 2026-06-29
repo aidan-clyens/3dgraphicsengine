@@ -61,8 +61,15 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
     Mesh
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC
-    glfw glad glm assimp BulletDynamics BulletCollision LinearMath ${GLFW_LIBRARIES}
-)
+if (WIN32)
+    target_link_libraries(${PROJECT_NAME} PUBLIC
+        glfw glad glm assimp::assimp BulletDynamics BulletCollision LinearMath ${GLFW_LIBRARIES}
+    )
+else()
+    target_link_libraries(${PROJECT_NAME} PUBLIC
+        glfw glad glm assimp BulletDynamics BulletCollision LinearMath ${GLFW_LIBRARIES}
+    )
+endif()
+
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
