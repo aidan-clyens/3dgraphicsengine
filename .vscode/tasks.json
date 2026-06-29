@@ -1,0 +1,97 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cmake: configure",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-S",
+                "${workspaceFolder}",
+                "-B",
+                "${workspaceFolder}/build",
+                "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+            ],
+            "group": "build",
+        },
+        {
+            "label": "cmake: build",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${workspaceFolder}/build"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": "3Dgraphicsengine: cmake configure",
+        },
+        {
+            "label": "3Dgraphicsengine: SimpleCube",
+            "command": "${workspaceFolder}/build/examples/SimpleCube/src/SimpleCube",
+            "windows": {
+                "command": "${workspaceFolder}\\build\\examples\\SimpleCube\\Debug\\SimpleCubeExample.exe"
+            }
+        },
+        {
+            "label": "docker: start-container",
+            "command": "${workspaceFolder}/docker/linux/docker-container-start.sh",
+            "linux": {
+                "command": "${workspaceFolder}/docker/linux/docker-container-start.sh"
+            }
+        },
+        {
+            "label": "sam: build and deploy",
+            "type": "shell",
+            "command": "sam build; sam deploy",
+            "group": "build"
+        },
+        {
+            "label": "sam: list stack outputs",
+            "type": "shell",
+            "command": "sam list stack-outputs --stack-name 3Dgraphicsengine"
+        },
+        {
+            "label": "aws: start build",
+            "type": "shell",
+            "command": "aws codebuild start-build --project-name graphicsengine3d",
+            "group": "build"
+        },
+        {
+            "label": "valgrind: memcheck",
+            "command": "valgrind",
+            "linux": {
+                "args": [
+                    "--leak-check=full",
+                    "--show-leak-kinds=all",
+                    "${workspaceFolder}/build/examples/${input:program_name}/src/${input:program_name}"
+                ]
+            }
+        },
+        {
+            "label": "valgrind: callgrind",
+            "command": "valgrind",
+            "linux": {
+                "args": [
+                    "--tool=callgrind",
+                    "${workspaceFolder}/build/examples/${input:program_name}/src/${input:program_name}"
+                ]
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "program_name",
+            "type": "pickString",
+            "description": "Example program name.",
+            "options": [
+                "SimpleCube"
+            ]
+        }
+    ]
+}
