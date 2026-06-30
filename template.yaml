@@ -1,8 +1,8 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: >
-  CloudFormation stack for the CMake + Docker CI/CD pipeline.
+  CloudFormation stack for AWS CodeBuild.
   Provisions an IAM service role and a CodeBuild project that builds
-  the project inside the project's custom Docker image from GHCR.
+  the project inside a custom Docker image from GHCR.
 
 # ---------------------------------------------------------------------------
 # Parameters
