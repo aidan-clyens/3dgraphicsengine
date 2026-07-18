@@ -19,6 +19,6 @@ else()
     find_package(GTest REQUIRED)
 endif()
 
-include("${CMAKE_CURRENT_LIST_DIR}/3DEngine-targets.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/3dgraphicsengine-targets.cmake")
 
-check_required_components(3DEngine)
+check_required_components(3dgraphicsengine)

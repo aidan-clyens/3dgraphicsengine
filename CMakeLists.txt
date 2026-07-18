@@ -12,7 +12,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 if(WIN32)
     message(STATUS "Building for Windows")
     add_compile_definitions(PLATFORM_WINDOWS)
-    # Enable automatic DLL copying
     cmake_policy(SET CMP0087 NEW)
 elseif(UNIX AND NOT APPLE)
     message(STATUS "Building for Linux")
@@ -42,8 +41,13 @@ else()
     find_package(GTest REQUIRED)
 endif()
 
+option(BUILD_EXAMPLES "Build examples" ON)
+
 add_subdirectory(src)
-add_subdirectory(examples)
+
+if (BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()
 
 # Installation settings
 include(GNUInstallDirs)
