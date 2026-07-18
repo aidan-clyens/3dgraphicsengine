@@ -14,7 +14,7 @@
                 "${workspaceFolder}/build",
                 "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
             ],
-            "group": "build",
+            "group": "build"
         },
         {
             "label": "cmake: build",
@@ -29,14 +29,15 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "dependsOn": "3Dgraphicsengine: cmake configure",
+            "dependsOn": "3Dgraphicsengine: cmake configure"
         },
         {
-            "label": "3Dgraphicsengine: SimpleCube",
-            "command": "${workspaceFolder}/build/examples/SimpleCube/src/SimpleCube",
+            "label": "3Dgraphicsengine: Run Example",
+            "command": "${workspaceFolder}/build/examples/${input:program_name}/src/${input:program_name}",
             "windows": {
-                "command": "${workspaceFolder}\\build\\examples\\SimpleCube\\Debug\\SimpleCubeExample.exe"
-            }
+                "command": "${workspaceFolder}\\build\\examples\\${input:program_name}\\Debug\\${input:program_name}Example.exe"
+            },
+            "problemMatcher": []
         },
         {
             "label": "docker: start-container",
@@ -90,7 +91,12 @@
             "type": "pickString",
             "description": "Example program name.",
             "options": [
-                "SimpleCube"
+                "SimpleCube",
+                "2D",
+                "CharacterController",
+                "LoadModel",
+                "RigidBody",
+                "ShaderArt"
             ]
         }
     ]
