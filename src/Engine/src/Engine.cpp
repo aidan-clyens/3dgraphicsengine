@@ -1,7 +1,7 @@
 #include "Engine.h"
 
 #include "Clock.h"
-
+#include "Logger.h"
 
 /* Engine
  */
@@ -23,7 +23,7 @@ Engine::~Engine() {
  */
 bool Engine::init() {
     if (!m_renderer.init(this)) {
-        std::cerr << "Failed to init Renderer" << std::endl;
+        LOG_ERROR("Engine: init - Failed to initialize Renderer! Exiting...");
         m_renderer.close();
         return false;
     }
@@ -39,6 +39,7 @@ bool Engine::init() {
     // Start clock
     Clock::instance()->init();
 
+    LOG_INFO("Engine: init - Initialized Engine with window dimensions: ", SCREEN_WIDTH, " x ", SCREEN_HEIGHT);
     return true;
 }
 
@@ -46,6 +47,8 @@ bool Engine::init() {
  */
 void Engine::start() {
     this->setup();
+
+    LOG_INFO("Engine: start - Starting game loop...");
 
     // Main rendering loop
     double current_frame = 0;
@@ -72,6 +75,8 @@ void Engine::cleanup() {
 
     m_physics.cleanup();
     m_renderer.close();
+
+    LOG_INFO("Engine: cleanup - Cleaned up Engine resources.");
 }
 
 /* add_object
@@ -79,6 +84,8 @@ void Engine::cleanup() {
 void Engine::add_object(Object3D *object) {
     object->assign_entity_manager(this);
     m_objects.push_back(object);
+
+    LOG_INFO("Engine: add_object - ", object->to_string());
 
     if (object->has_component(COMP_MESH)) {
         this->handle_add_component(object, object->get_component(COMP_MESH), COMP_MESH);
@@ -233,6 +240,8 @@ Renderer *Engine::get_renderer() {
 /* handle_add_component
  */
 void Engine::handle_add_component(Entity *entity, Component *component, eComponentType type) {
+    LOG_INFO("Engine: handle_add_component - Adding Component type: ", type);
+
     if (entity->has_component(type)) {
         switch (type) {
             case COMP_MESH: {
@@ -283,6 +292,8 @@ void Engine::handle_add_component(Entity *entity, Component *component, eCompone
 /* handle_remove_component
  */
 void Engine::handle_remove_component(Entity *entity, Component *component, eComponentType type) {
+    LOG_INFO("Engine: handle_remove_component - Removing Component type: ", type);
+
     if (entity->has_component(type)) {
         switch (type) {
             case COMP_MESH: {

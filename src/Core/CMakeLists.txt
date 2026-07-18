@@ -11,11 +11,13 @@ target_sources(${PROJECT_NAME}
         include/LoadImage.h
         include/Timer.h
         include/Types.h
+        include/Logger.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
     src/LoadImage.cpp
     src/Timer.cpp
+    src/Logger.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

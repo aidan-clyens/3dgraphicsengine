@@ -27,6 +27,9 @@ class Object3D : public Entity {
         std::string get_name() const;
         void set_name(const std::string &name);
 
+
+        std::string to_string() const;
+
     protected:
         std::string m_name; 
 };

@@ -8,6 +8,7 @@
 #include "Light.h"
 #include "Mesh.h"
 #include "Timer.h"
+#include "Logger.h"
 
 #include <iostream>
 
@@ -23,12 +24,21 @@
 
 static bool key_ready = true;
 
+constexpr const char *APP_LOG_FILEPATH = "SimpleCube.log";
 
 // Class definitions
 /* Game
  */
 class Game : public Engine {
     public:
+
+        Game() {
+            // Setup logging
+            Logger::instance().enable_console_output(true);
+            Logger::instance().set_log_file(APP_LOG_FILEPATH);
+            set_thread_name("Main");
+        }
+
         /* process_mouse_input
          */
         void process_keyboard_input() {

@@ -80,3 +80,9 @@ std::string Object3D::get_name() const {
 void Object3D::set_name(const std::string &name) {
     m_name = name;
 }
+
+std::string Object3D::to_string() const {
+    // TODO - Implement Object3D::to_string()
+    std::string ret = "Object3D()";
+    return ret;
+}
