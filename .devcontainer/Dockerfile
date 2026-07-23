@@ -1,14 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/cpp:2-ubuntu24.04
-
-ARG REINSTALL_CMAKE_VERSION_FROM_SOURCE="3.25.2"
-
-# Optionally install the cmake for vcpkg
-COPY ./reinstall-cmake.sh /tmp/
-
-RUN if [ "${REINSTALL_CMAKE_VERSION_FROM_SOURCE}" != "none" ]; then \
-    chmod +x /tmp/reinstall-cmake.sh && /tmp/reinstall-cmake.sh ${REINSTALL_CMAKE_VERSION_FROM_SOURCE}; \
-    fi \
-    && rm -f /tmp/reinstall-cmake.sh
+FROM ubuntu:24.04
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive
 
@@ -20,6 +10,9 @@ RUN apt-get install -y --no-install-recommends \
     curl \
     file \
     openssh-client \
+    cmake \
+    build-essential \
+    gdb \
     pkg-config \
     libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev \
     mesa-utils mesa-common-dev libglew-dev libglfw3-dev \

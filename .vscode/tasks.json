@@ -33,7 +33,7 @@
         },
         {
             "label": "3Dgraphicsengine: Run Example",
-            "command": "${workspaceFolder}/build/examples/${input:program_name}/src/${input:program_name}",
+            "command": "${workspaceFolder}/build/examples/${input:program_name}/${input:program_name}Example",
             "windows": {
                 "command": "${workspaceFolder}\\build\\examples\\${input:program_name}\\Debug\\${input:program_name}Example.exe"
             },
