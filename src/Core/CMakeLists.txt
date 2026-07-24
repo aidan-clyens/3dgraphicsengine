@@ -18,6 +18,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     src/LoadImage.cpp
     src/Timer.cpp
     src/Logger.cpp
+    src/Types.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

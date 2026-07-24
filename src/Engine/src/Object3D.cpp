@@ -82,7 +82,8 @@ void Object3D::set_name(const std::string &name) {
 }
 
 std::string Object3D::to_string() const {
-    // TODO - Implement Object3D::to_string()
-    std::string ret = "Object3D()";
+    std::string ret = "Object3D(";
+    ret += transform_to_string(m_transform);
+    ret += ")";
     return ret;
 }

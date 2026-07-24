@@ -3,6 +3,7 @@
 // Includes
 #include "Types.h"
 
+#include <string>
 #include <unordered_map>
 
 // Enums
@@ -20,6 +21,8 @@ typedef struct {
     vec3 rotation;
     vec3 size;
 } Transform;
+
+std::string transform_to_string(const Transform &transform);
 
 // Forward Declarations
 class Entity;

@@ -1,5 +1,14 @@
 #include "ECS.h"
 
+std::string transform_to_string(const Transform &transform) {
+    std::string ret = "Transform(";
+    ret += "position=" + to_string(transform.position) + ", ";
+    ret += "rotation=" + to_string(transform.rotation) + ", ";
+    ret += "size=" + to_string(transform.size);
+    ret += ")";
+    return ret;
+}
+
 /* Component
  */
 Component::Component() {
