@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <string>
 #include <algorithm>
 #include <iterator>
 
@@ -61,6 +62,8 @@ class Mesh : public Component {
 
         void dump_vertices();
         void dump_normals();
+
+        std::string to_string();
 
     protected:
         void init_mesh();

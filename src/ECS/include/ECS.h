@@ -15,6 +15,8 @@ typedef enum {
     COMP_MODEL = 4
 } eComponentType;
 
+std::string component_type_to_string(const eComponentType &type);
+
 // Structs
 typedef struct {
     vec3 position;
@@ -47,8 +49,8 @@ class Component {
  */
 class EntityManager {
     public:
-        virtual void handle_add_component(Entity *entity, Component *component, eComponentType type) = 0;
-        virtual void handle_remove_component(Entity *entity, Component *component, eComponentType type) = 0;
+        virtual void handle_add_component(Entity *entity, eComponentType type) = 0;
+        virtual void handle_remove_component(Entity *entity, eComponentType type) = 0;
 };
 
 // Typedefs

@@ -174,19 +174,19 @@ void DebugWindow::show_cameras() {
     p_engine->get_cameras(cameras);
 
     static char* items[100];
-    for (int i = 0; i < cameras.size(); i++) {
+    for (size_t i = 0; i < cameras.size(); i++) {
         char name[50];
-        sprintf(name, "Camera %d", i);
+        sprintf(name, "Camera %ld", i);
         items[i] = name;
     }
 
-    for (int n = 0; n < cameras.size(); n++) {
+    for (size_t n = 0; n < cameras.size(); n++) {
         std::cout << items[n] << std::endl; 
     }
 
-    static int item_current_idx = 0; // Here we store our selection data as an index.
+    static size_t item_current_idx = 0; // Here we store our selection data as an index.
     if (ImGui::BeginListBox("", LISTBOX_SIZE)) {
-        for (int n = 0; n < cameras.size(); n++) {
+        for (size_t n = 0; n < cameras.size(); n++) {
             const bool is_selected = (item_current_idx == n);
             if (ImGui::Selectable(items[n], is_selected))
                 item_current_idx = n;   
@@ -207,7 +207,7 @@ void DebugWindow::show_objects() {
     p_engine->get_objects(objects);
 
     ImGui::PushID("show objects");
-    for (int i = 0; i < objects.size(); i++) {
+    for (size_t i = 0; i < objects.size(); i++) {
         // char name[50];
         // sprintf(name, "Object %d", i);
 
@@ -390,7 +390,7 @@ void DebugWindow::show_model(Model *model) {
     
     ImGui::Text("Meshes");
 
-    for (int i = 0; i < meshes.size(); i++) {
+    for (size_t i = 0; i < meshes.size(); i++) {
         ImGui::PushID(i);
         DebugWindow::show_mesh(meshes[i]);
         ImGui::Spacing();

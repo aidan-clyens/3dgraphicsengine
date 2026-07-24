@@ -76,6 +76,9 @@ class Game : public Engine {
 /* main
  */
 int main(int argc, char **argv) {
+    (void)argc;
+    (void)argv;
+
     Game game;
 
     if (!game.init()) {

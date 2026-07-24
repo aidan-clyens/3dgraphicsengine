@@ -186,3 +186,11 @@ bool Shader::link_shader_program(unsigned int vertex_shader_id, unsigned int fra
 
     return true;
 }
+
+std::string Shader::to_string() {
+    std::string ret = "Shader(";
+    ret += "vertex=" + m_vertex_shader_path + ", ";
+    ret += "fragment=" + m_fragment_shader_path;
+    ret += ")";
+    return ret;
+}

@@ -1,5 +1,22 @@
 #include "ECS.h"
 
+std::string component_type_to_string(const eComponentType &type) {
+    switch (type) {
+        case eComponentType::COMP_CAMERA:
+            return "CAMERA";
+        case eComponentType::COMP_LIGHT:
+            return "LIGHT";
+        case eComponentType::COMP_MESH:
+            return "MESH";
+        case eComponentType::COMP_MODEL:
+            return "MODEL";
+        case eComponentType::COMP_RIGIDBODY:
+            return "RIGIDBODY";
+        default:
+            return "INVALID";
+    }
+}
+
 std::string transform_to_string(const Transform &transform) {
     std::string ret = "Transform(";
     ret += "position=" + to_string(transform.position) + ", ";
@@ -58,7 +75,7 @@ Entity::~Entity() {
 void Entity::add_component(int id, Component *component) {
     m_components[id] = component;
     if (p_entity_manager != nullptr) {
-        p_entity_manager->handle_add_component(this, component, (eComponentType)id);
+        p_entity_manager->handle_add_component(this, (eComponentType)id);
     }
 }
 
@@ -67,7 +84,7 @@ void Entity::add_component(int id, Component *component) {
 void Entity::remove_component(int id) {
     if (this->has_component(id)) {
         if (p_entity_manager != nullptr) {
-            p_entity_manager->handle_remove_component(this, m_components[id], (eComponentType)id);
+            p_entity_manager->handle_remove_component(this, (eComponentType)id);
         }
         m_components.erase(id);
     }

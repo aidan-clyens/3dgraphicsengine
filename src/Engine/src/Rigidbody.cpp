@@ -5,8 +5,8 @@
 /* Rigidbody
  */
 Rigidbody::Rigidbody(Entity *object, float mass, bool dynamic):
-p_object(object),
 m_mass(btScalar(mass)),
+p_object(object),
 m_is_dynamic(dynamic)
 {
     Transform transform = p_object->get_transform();
@@ -57,6 +57,8 @@ Rigidbody::~Rigidbody() {
 /* update
  */
 void Rigidbody::update(float delta_time) {
+    (void)delta_time;
+
     btTransform trans;
     if (p_body && p_body->getMotionState()) {
         p_body->getMotionState()->getWorldTransform(trans);

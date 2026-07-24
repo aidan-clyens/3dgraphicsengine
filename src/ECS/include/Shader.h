@@ -39,6 +39,8 @@ class Shader {
         void set_vec2(const std::string &variable, vec2 vector);
         void set_vec3(const std::string &variable, vec3 vector);
 
+        std::string to_string();
+
     private:
         bool load_shader(const std::string &filename, eShaderType shader_type, unsigned int &shader_id);
         bool link_shader_program(unsigned int vertex_shader_id, unsigned int fragment_shader_id);

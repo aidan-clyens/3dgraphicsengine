@@ -6,9 +6,9 @@
 /* Engine
  */
 Engine::Engine(int width, int height, const std::string &path):
-m_renderer(width, height, path),
+p_input_manager(InputManager::get_instance()),
 p_camera(new Camera(vec3(0, 0, 0))),
-p_input_manager(InputManager::get_instance())
+m_renderer(width, height, path)
 {
 
 }
@@ -88,23 +88,23 @@ void Engine::add_object(Object3D *object) {
     LOG_INFO("Engine: add_object - ", object->to_string());
 
     if (object->has_component(COMP_MESH)) {
-        this->handle_add_component(object, object->get_component(COMP_MESH), COMP_MESH);
+        this->handle_add_component(object, COMP_MESH);
     }
 
     if (object->has_component(COMP_RIGIDBODY)) {
-        this->handle_add_component(object, object->get_component(COMP_RIGIDBODY), COMP_RIGIDBODY);
+        this->handle_add_component(object, COMP_RIGIDBODY);
     }
 
     if (object->has_component(COMP_CAMERA)) {
-        this->handle_add_component(object, object->get_component(COMP_CAMERA), COMP_CAMERA);
+        this->handle_add_component(object, COMP_CAMERA);
     }
 
     if (object->has_component(COMP_LIGHT)) {
-        this->handle_add_component(object, object->get_component(COMP_LIGHT), COMP_LIGHT);
+        this->handle_add_component(object, COMP_LIGHT);
     }
 
     if (object->has_component(COMP_MODEL)) {
-        this->handle_add_component(object, object->get_component(COMP_MODEL), COMP_MODEL);
+        this->handle_add_component(object, COMP_MODEL);
     }
 }
 
@@ -113,23 +113,23 @@ void Engine::add_object(Object3D *object) {
 void Engine::remove_object(Object3D *object) {
     // Remove components
     if (object->has_component(COMP_MESH)) {
-        this->handle_remove_component(object, object->get_component(COMP_MESH), COMP_MESH);
+        this->handle_remove_component(object, COMP_MESH);
     }
 
     if (object->has_component(COMP_RIGIDBODY)) {
-        this->handle_remove_component(object, object->get_component(COMP_RIGIDBODY), COMP_RIGIDBODY);
+        this->handle_remove_component(object, COMP_RIGIDBODY);
     }
 
     if (object->has_component(COMP_CAMERA)) {
-        this->handle_remove_component(object, object->get_component(COMP_CAMERA), COMP_CAMERA);
+        this->handle_remove_component(object, COMP_CAMERA);
     }
 
     if (object->has_component(COMP_LIGHT)) {
-        this->handle_remove_component(object, object->get_component(COMP_LIGHT), COMP_LIGHT);
+        this->handle_remove_component(object, COMP_LIGHT);
     }
 
     if (object->has_component(COMP_MODEL)) {
-        this->handle_remove_component(object, object->get_component(COMP_MODEL), COMP_MODEL);
+        this->handle_remove_component(object, COMP_MODEL);
     }
 
     // Remove object
@@ -222,6 +222,7 @@ void Engine::update() {
 /* process_mouse_button
  */
 void Engine::process_mouse_button(int button, int action, int mods) {
+    (void)mods;
     DebugWindow::add_mouse_button_event(button, action);
 }
 
@@ -239,8 +240,8 @@ Renderer *Engine::get_renderer() {
 
 /* handle_add_component
  */
-void Engine::handle_add_component(Entity *entity, Component *component, eComponentType type) {
-    LOG_INFO("Engine: handle_add_component - Adding Component type: ", type);
+void Engine::handle_add_component(Entity *entity, eComponentType type) {
+    LOG_INFO("Engine: handle_add_component - Adding Component type: ", component_type_to_string(type));
 
     if (entity->has_component(type)) {
         switch (type) {
@@ -248,6 +249,7 @@ void Engine::handle_add_component(Entity *entity, Component *component, eCompone
                 Mesh *mesh = (Mesh*)entity->get_component(type);
                 if (std::find(m_meshes.begin(), m_meshes.end(), mesh) == m_meshes.end()) {
                     m_meshes.push_back(mesh);
+                    LOG_INFO("Engine: handle_add_component - Added ", mesh->to_string());
                 }
                 break;
             }
@@ -291,7 +293,7 @@ void Engine::handle_add_component(Entity *entity, Component *component, eCompone
 
 /* handle_remove_component
  */
-void Engine::handle_remove_component(Entity *entity, Component *component, eComponentType type) {
+void Engine::handle_remove_component(Entity *entity, eComponentType type) {
     LOG_INFO("Engine: handle_remove_component - Removing Component type: ", type);
 
     if (entity->has_component(type)) {
@@ -301,12 +303,14 @@ void Engine::handle_remove_component(Entity *entity, Component *component, eComp
                 auto it = std::find(m_meshes.begin(), m_meshes.end(), mesh);
                 if (it != m_meshes.end()) {
                     m_meshes.erase(it);
+                    LOG_INFO("Engine: handle_remove_component - Erased ", mesh->to_string());
                 }
                 break;
             }
             case COMP_RIGIDBODY: {
                 Rigidbody *rigidbody = (Rigidbody *)entity->get_component(type);
-                // TODO
+                (void)rigidbody;
+                // TODO - Implement remove_component - Rigidbody
                 break;
             }
             case COMP_CAMERA: {

@@ -267,3 +267,14 @@ void Mesh::dump_normals() {
     }
     std::cout << std::endl;
 }
+
+std::string Mesh::to_string() {
+    std::string ret = "Mesh(";
+    ret += "vertices=" + std::to_string(m_num_vertices);
+    if (has_shader()) {
+        ret += ", ";
+        ret += "shader=" + m_shader.to_string();
+    }
+    ret += ")";
+    return ret;
+}
