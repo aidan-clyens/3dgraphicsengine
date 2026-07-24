@@ -26,8 +26,6 @@ RUN apt-get install -y --no-install-recommends \
     libassimp-dev \
     && rm -rf /var/lib/apt/lists/*
 
-ENV DISPLAY=host.docker.internal:0.0
-
 # Default command
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
