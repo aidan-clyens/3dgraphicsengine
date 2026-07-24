@@ -14,11 +14,19 @@ RUN apt-get install -y --no-install-recommends \
     build-essential \
     gdb \
     pkg-config \
-    libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev \
-    mesa-utils mesa-common-dev libglew-dev libglfw3-dev \
+    x11-apps \
+    libgl1-mesa-dev \
+    libglu1-mesa-dev \
+    freeglut3-dev \
+    mesa-utils \
+    mesa-common-dev \
+    libglew-dev \
+    libglfw3-dev \
     libgtest-dev \
     libassimp-dev \
     && rm -rf /var/lib/apt/lists/*
+
+ENV DISPLAY=host.docker.internal:0.0
 
 # Default command
 COPY entrypoint.sh /entrypoint.sh
