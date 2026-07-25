@@ -197,9 +197,7 @@ CubeMesh::CubeMesh() {
 /* ~CubeMesh
  */
 CubeMesh::~CubeMesh() {
-    delete m_vertex_buffer.data;
-    delete m_normal_buffer.data;
-    delete m_uv_buffer.data;
+
 }
 
 /* set_face_enabled

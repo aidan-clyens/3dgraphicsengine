@@ -33,9 +33,9 @@ Mesh::~Mesh() {
     glDeleteBuffers(1, &m_instance_buffer_object);
     glDeleteVertexArrays(1, &m_vertex_array_object);
 
-    delete m_vertex_buffer.data;
-    delete m_normal_buffer.data;
-    delete m_uv_buffer.data;
+    delete[] m_vertex_buffer.data;
+    delete[] m_normal_buffer.data;
+    delete[] m_uv_buffer.data;
 }
 
 /* render

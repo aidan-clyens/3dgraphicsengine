@@ -34,6 +34,7 @@ class Entity;
 class Component {
     public:
         Component();
+        virtual ~Component();
 
         virtual void set_transform(Transform transform);
         Transform get_transform() const;

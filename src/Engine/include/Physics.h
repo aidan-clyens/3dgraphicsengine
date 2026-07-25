@@ -18,6 +18,7 @@ class Physics {
         virtual ~Physics();
 
         void add_rigid_body(Rigidbody *body);
+        void remove_rigid_body(Rigidbody *body);
 
         void update(float delta_time);
 

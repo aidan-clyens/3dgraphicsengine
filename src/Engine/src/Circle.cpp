@@ -29,3 +29,13 @@ Object3D(transform.position, transform.rotation, transform.size)
     mesh->set_texture(texture);
     mesh->set_transform(transform);
 }
+
+/* Circle
+ */
+Circle::Circle(vec2 position, float radius, vec3 color):
+Circle(
+    Transform{ vec3(position.x, position.y, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(radius, radius, radius) },
+    color
+)
+{
+}

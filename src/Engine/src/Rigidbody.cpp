@@ -5,6 +5,7 @@
 /* Rigidbody
  */
 Rigidbody::Rigidbody(Entity *object, float mass, bool dynamic):
+p_physics_world(nullptr),
 m_mass(btScalar(mass)),
 p_object(object),
 m_is_dynamic(dynamic)
@@ -49,6 +50,10 @@ m_is_dynamic(dynamic)
 /* ~Rigidbody
  */
 Rigidbody::~Rigidbody() {
+    if (p_physics_world != nullptr) {
+        p_physics_world->remove_rigid_body(this);
+    }
+
     delete p_motion_state;
     delete p_body;
     delete p_ghost_object;
@@ -80,13 +85,13 @@ void Rigidbody::update(float delta_time) {
     transform.rotation = rotation;
     transform.position = pos;
 
-    this->set_transform(transform);
+    p_object->set_transform(transform);
 }
 
 /* set_transform
  */
 void Rigidbody::set_transform(Transform transform) {
-    p_object->set_transform(transform);
+    Component::set_transform(transform);
 }
 
 /* get_transform

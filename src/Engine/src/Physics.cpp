@@ -1,5 +1,6 @@
 #include "Physics.h"
 
+#include <algorithm>
 
 /* Physics
  */
@@ -30,6 +31,18 @@ void Physics::add_rigid_body(Rigidbody *body) {
     m_bodies.push_back(body);
     p_dynamics_world->addRigidBody(body->get_body());
     p_dynamics_world->addCollisionObject(body->get_collision_object(), btBroadphaseProxy::KinematicFilter, btBroadphaseProxy::StaticFilter | btBroadphaseProxy::DefaultFilter);
+}
+
+/* remove_rigid_body
+ */
+void Physics::remove_rigid_body(Rigidbody *body) {
+    p_dynamics_world->removeRigidBody(body->get_body());
+    p_dynamics_world->removeCollisionObject(body->get_collision_object());
+
+    auto it = std::find(m_bodies.begin(), m_bodies.end(), body);
+    if (it != m_bodies.end()) {
+        m_bodies.erase(it);
+    }
 }
 
 /* update

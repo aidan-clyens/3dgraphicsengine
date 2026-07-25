@@ -2,6 +2,20 @@
 
 #include <cstring>
 
+/* build_model_matrix
+ */
+mat4 MeshInstances::build_model_matrix(Transform transform) {
+    mat4 model = mat4(1.0);
+
+    model = glm::translate(model, transform.position);
+    model = glm::rotate(model, glm::radians((float)transform.rotation.x), vec3(1.0, 0.0, 0.0));
+    model = glm::rotate(model, glm::radians((float)transform.rotation.y), vec3(0.0, 1.0, 0.0));
+    model = glm::rotate(model, glm::radians((float)transform.rotation.z), vec3(0.0, 0.0, 1.0));
+    model = glm::scale(model, transform.size);
+
+    return model;
+}
+
 /* MeshInstances
  */
 MeshInstances::MeshInstances(Mesh *instance):
@@ -42,16 +56,7 @@ MeshInstances::MeshInstances(Mesh *instance, std::vector<Transform> transforms):
 m_instance(instance)
 {
     for (unsigned int i = 0; i < transforms.size(); i++) {
-        // Create transformations
-        mat4 model = mat4(1.0);
-
-        // Transform object
-        model = glm::translate(model, transforms[i].position);
-        model = glm::rotate(model, glm::radians((float)transforms[i].rotation.x), vec3(1.0, 0.0, 0.0));
-        model = glm::rotate(model, glm::radians((float)transforms[i].rotation.y), vec3(0.0, 1.0, 0.0));
-        model = glm::rotate(model, glm::radians((float)transforms[i].rotation.z), vec3(0.0, 0.0, 1.0));
-
-        m_models.push_back(model);
+        m_models.push_back(build_model_matrix(transforms[i]));
     }
 
     m_num_vertices = instance->m_num_vertices;
@@ -86,10 +91,6 @@ m_instance(instance)
 /* ~MeshInstances
  */
 MeshInstances::~MeshInstances() {
-    delete m_vertex_buffer.data;
-    delete m_normal_buffer.data;
-    delete m_uv_buffer.data;
-
     delete m_instance;
 }
 
@@ -106,7 +107,7 @@ void MeshInstances::render() {
     glBufferData(GL_ARRAY_BUFFER, m_vertex_buffer.size + m_normal_buffer.size + m_uv_buffer.size, nullptr, GL_STATIC_DRAW);
     glBufferSubData(GL_ARRAY_BUFFER, 0, m_vertex_buffer.size, m_vertex_buffer.data);
     glBufferSubData(GL_ARRAY_BUFFER, m_vertex_buffer.size, m_normal_buffer.size, m_normal_buffer.data);
-    glBufferSubData(GL_ARRAY_BUFFER, m_vertex_buffer.size + m_normal_buffer.size, m_uv_buffer.size, m_vertex_buffer.data);
+    glBufferSubData(GL_ARRAY_BUFFER, m_vertex_buffer.size + m_normal_buffer.size, m_uv_buffer.size, m_uv_buffer.data);
 
     glVertexAttribPointer(0, m_vertex_buffer.stride, GL_FLOAT, GL_FALSE, m_vertex_buffer.stride * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
@@ -155,14 +156,15 @@ void MeshInstances::render() {
 /* add_transform
  */
 void MeshInstances::add_transform(Transform transform) {
-    // Create transformations
-    mat4 model = mat4(1.0);
+    m_models.push_back(build_model_matrix(transform));
+}
 
-    // Transform object
-    model = glm::translate(model, transform.position);
-    model = glm::rotate(model, glm::radians((float)transform.rotation.x), vec3(1.0, 0.0, 0.0));
-    model = glm::rotate(model, glm::radians((float)transform.rotation.y), vec3(0.0, 1.0, 0.0));
-    model = glm::rotate(model, glm::radians((float)transform.rotation.z), vec3(0.0, 0.0, 1.0));
+/* set_transforms
+ */
+void MeshInstances::set_transforms(std::vector<Transform> transforms) {
+    m_models.clear();
 
-    m_models.push_back(model);
+    for (const Transform &transform : transforms) {
+        m_models.push_back(build_model_matrix(transform));
+    }
 }

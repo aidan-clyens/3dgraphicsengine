@@ -56,7 +56,5 @@ SquareMesh::SquareMesh() {
 /* ~SquareMesh
  */
 SquareMesh::~SquareMesh() {
-    delete m_vertex_buffer.data;
-    delete m_normal_buffer.data;
-    delete m_uv_buffer.data;
+
 }

@@ -32,6 +32,12 @@ Component::Component() {
 
 }
 
+/* ~Component
+ */
+Component::~Component() {
+
+}
+
 /* set_transform
  */
 void Component::set_transform(Transform transform) {
@@ -67,7 +73,9 @@ p_entity_manager(nullptr)
 /* ~Entity
  */
 Entity::~Entity() {
-
+    for (auto &pair : m_components) {
+        delete pair.second;
+    }
 }
 
 /* add_component
