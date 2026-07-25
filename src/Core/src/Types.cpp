@@ -29,3 +29,18 @@ std::string to_string(const vec4 &v)
     ret += "]";
     return ret;
 }
+
+std::ostream &operator<<(std::ostream &os, const vec2 &v)
+{
+    return os << to_string(v);
+}
+
+std::ostream &operator<<(std::ostream &os, const vec3 &v)
+{
+    return os << to_string(v);
+}
+
+std::ostream &operator<<(std::ostream &os, const vec4 &v)
+{
+    return os << to_string(v);
+}

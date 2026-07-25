@@ -3,6 +3,8 @@
 #include "Clock.h"
 #include "Logger.h"
 
+#include <cmath>
+
 /* Engine
  */
 Engine::Engine(int width, int height, const std::string &path):
@@ -61,7 +63,9 @@ void Engine::start() {
 
         this->update();
 
+#ifdef BUILD_BULLET3
         m_physics.update(m_delta_time);
+#endif
         m_renderer.render(m_meshes, m_lights, *p_camera);
     }
 }
@@ -73,7 +77,9 @@ void Engine::cleanup() {
         delete object;
     }
 
+#ifdef BUILD_BULLET3
     m_physics.cleanup();
+#endif
     m_renderer.close();
 
     LOG_INFO("Engine: cleanup - Cleaned up Engine resources.");
@@ -91,9 +97,11 @@ void Engine::add_object(Object3D *object) {
         this->handle_add_component(object, COMP_MESH);
     }
 
+#ifdef BUILD_BULLET3
     if (object->has_component(COMP_RIGIDBODY)) {
         this->handle_add_component(object, COMP_RIGIDBODY);
     }
+#endif
 
     if (object->has_component(COMP_CAMERA)) {
         this->handle_add_component(object, COMP_CAMERA);
@@ -116,9 +124,11 @@ void Engine::remove_object(Object3D *object) {
         this->handle_remove_component(object, COMP_MESH);
     }
 
+#ifdef BUILD_BULLET3
     if (object->has_component(COMP_RIGIDBODY)) {
         this->handle_remove_component(object, COMP_RIGIDBODY);
     }
+#endif
 
     if (object->has_component(COMP_CAMERA)) {
         this->handle_remove_component(object, COMP_CAMERA);
@@ -226,6 +236,35 @@ double Engine::get_delta_time() const {
     return m_delta_time;
 }
 
+/* get_screen_dimensions
+ */
+vec2 Engine::get_screen_dimensions() const {
+    return m_renderer.get_screen_size();
+}
+
+/* get_world_boundaries
+ * Computes the visible world-space extent of the z=0 plane, using the
+ * camera's current distance from that plane as the depth (the engine's
+ * projection is a fixed perspective, so this widens/narrows with distance -
+ * it is not a fixed rectangle for arbitrary depths).
+ */
+WorldBounds Engine::get_world_boundaries() const {
+    vec3 camera_position = p_camera->get_position();
+    vec2 screen_size = m_renderer.get_screen_size();
+
+    float aspect_ratio = screen_size.x / screen_size.y;
+    float depth = std::abs(camera_position.z);
+
+    float half_height = depth * tanf(glm::radians(CAMERA_FOV_DEGREES) / 2.0f);
+    float half_width = half_height * aspect_ratio;
+
+    WorldBounds bounds;
+    bounds.min = vec2(camera_position.x - half_width, camera_position.y - half_height);
+    bounds.max = vec2(camera_position.x + half_width, camera_position.y + half_height);
+
+    return bounds;
+}
+
 /* setup
  */
 void Engine::setup() {
@@ -251,10 +290,22 @@ void Engine::process_mouse_input(double x, double y) {
     p_input_manager->process_mouse_input(x, y);
 }
 
-/* get_renderer
+/* get_window
  */
-Renderer *Engine::get_renderer() {
-    return &m_renderer;
+GLFWwindow *Engine::get_window() {
+    return m_renderer.get_window();
+}
+
+/* get_lighting_info
+ */
+LightingInfo Engine::get_lighting_info() const {
+    return m_renderer.get_lighting_info();
+}
+
+/* set_lighting_info
+ */
+void Engine::set_lighting_info(LightingInfo info) {
+    m_renderer.set_lighting_info(info);
 }
 
 /* handle_add_component
@@ -272,11 +323,13 @@ void Engine::handle_add_component(Entity *entity, eComponentType type) {
                 }
                 break;
             }
+#ifdef BUILD_BULLET3
             case COMP_RIGIDBODY: {
                 Rigidbody *rigidbody = (Rigidbody *)entity->get_component(type);
                 m_physics.add_rigid_body(rigidbody);
                 break;
             }
+#endif
             case COMP_CAMERA: {
                 Camera *camera = (Camera*)entity->get_component(type);
                 if (std::find(m_cameras.begin(), m_cameras.end(), camera) == m_cameras.end()) {
@@ -326,12 +379,14 @@ void Engine::handle_remove_component(Entity *entity, eComponentType type) {
                 }
                 break;
             }
+#ifdef BUILD_BULLET3
             case COMP_RIGIDBODY: {
                 Rigidbody *rigidbody = (Rigidbody *)entity->get_component(type);
                 (void)rigidbody;
                 // TODO - Implement remove_component - Rigidbody
                 break;
             }
+#endif
             case COMP_CAMERA: {
                 Camera *camera = (Camera*)entity->get_component(type);
                 auto it = std::find(m_cameras.begin(), m_cameras.end(), camera);

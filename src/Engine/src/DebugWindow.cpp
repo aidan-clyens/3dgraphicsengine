@@ -26,7 +26,7 @@ void DebugWindow::init(Engine *engine) {
     ImGui::StyleColorsDark();
 
     const char *glsl_version = "#version 330";
-    ImGui_ImplGlfw_InitForOpenGL(engine->get_renderer()->get_window(), true);
+    ImGui_ImplGlfw_InitForOpenGL(engine->get_window(), true);
     ImGui_ImplOpenGL3_Init(glsl_version);
 }
 
@@ -523,7 +523,7 @@ void DebugWindow::show_debug() {
 
     ImGui::Text("Lighting Matrix Info");
 
-    LightingInfo lighting_info = p_engine->get_renderer()->get_lighting_info();
+    LightingInfo lighting_info = p_engine->get_lighting_info();
 
     ImGui::Text("Light Projection Size");
     ImGui::SameLine();
@@ -546,7 +546,7 @@ void DebugWindow::show_debug() {
     lighting_info.far_plane = DebugWindow::show_float(lighting_info.far_plane);
     ImGui::PopID();
 
-    p_engine->get_renderer()->set_lighting_info(lighting_info);
+    p_engine->set_lighting_info(lighting_info);
 
     ImGui::Separator();
     ImGui::PopID();

@@ -9,7 +9,9 @@
 #include "Object3D.h"
 #include "Camera.h"
 #include "InputManager.h"
+#ifdef BUILD_BULLET3
 #include "Physics.h"
+#endif
 #include "Light.h"
 #include "DebugWindow.h"
 #include "Cube.h"
@@ -24,6 +26,12 @@
 // Defines
 #define SCREEN_WIDTH 1600
 #define SCREEN_HEIGHT 900
+
+// Structs
+typedef struct {
+    vec2 min;
+    vec2 max;
+} WorldBounds;
 
 /* Engine
  */
@@ -61,6 +69,10 @@ class Engine : public EntityManager {
 
         double get_delta_time() const;
 
+        vec2 get_screen_dimensions() const;
+
+        WorldBounds get_world_boundaries() const;
+
         // To be implemented by user
         virtual void setup();
         virtual void update();
@@ -68,14 +80,19 @@ class Engine : public EntityManager {
         void process_mouse_button(int button, int action, int mods);
         void process_mouse_input(double x, double y);
 
-        Renderer *get_renderer();
+        GLFWwindow *get_window();
+
+        LightingInfo get_lighting_info() const;
+        void set_lighting_info(LightingInfo info);
 
         void handle_add_component(Entity *entity, eComponentType type);
         void handle_remove_component(Entity *entity, eComponentType type);
 
     protected:
         InputManager *p_input_manager;
+#ifdef BUILD_BULLET3
         Physics m_physics;
+#endif
 
         Camera *p_camera;
 

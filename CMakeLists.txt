@@ -26,6 +26,8 @@ if(UNIX AND NOT APPLE)
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif()
 
+option(BUILD_BULLET3 "Build and link the vendored Bullet3 physics library (required for Rigidbody/Physics/DynamicCharacterController)" ON)
+
 # GLFW vendoring options
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
@@ -45,7 +47,9 @@ set(ASSIMP_BUILD_ZLIB ON CACHE BOOL "" FORCE)
 
 add_subdirectory(thirdparty/glad)
 add_subdirectory(thirdparty/glm)
-add_subdirectory(thirdparty/bullet3)
+if(BUILD_BULLET3)
+    add_subdirectory(thirdparty/bullet3)
+endif()
 add_subdirectory(thirdparty/glfw)
 add_subdirectory(thirdparty/assimp)
 
@@ -78,22 +82,25 @@ install(
 )
 
 # Install library targets and header files
+set(3DGRAPHICSENGINE_INSTALL_TARGETS
+    Engine
+    Core
+    ECS
+    Texture
+    Mesh
+    glad
+    glm
+    glm-header-only
+    glfw
+    assimp
+    zlibstatic
+)
+if(BUILD_BULLET3)
+    list(APPEND 3DGRAPHICSENGINE_INSTALL_TARGETS BulletDynamics BulletCollision LinearMath)
+endif()
+
 install(
-    TARGETS
-        Engine
-        Core
-        ECS
-        Texture
-        Mesh
-        glad
-        glm
-        glm-header-only
-        BulletDynamics
-        BulletCollision
-        LinearMath
-        glfw
-        assimp
-        zlibstatic
+    TARGETS ${3DGRAPHICSENGINE_INSTALL_TARGETS}
     EXPORT ${PROJECT_NAME}-targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -112,11 +119,13 @@ install(
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     PATTERN "CMakeLists.txt" EXCLUDE
 )
-install(
-    DIRECTORY thirdparty/bullet3/src/
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    FILES_MATCHING PATTERN "*.h"
-)
+if(BUILD_BULLET3)
+    install(
+        DIRECTORY thirdparty/bullet3/src/
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        FILES_MATCHING PATTERN "*.h"
+    )
+endif()
 
 # imgui is compiled directly into Engine's sources rather than added as its
 # own subdirectory/target, so its headers (referenced unprefixed, e.g.

@@ -17,7 +17,7 @@ m_height(height),
 m_path(path),
 m_model(mat4(1.0)),
 m_view(mat4(1.0)),
-m_projection(glm::perspective(glm::radians((float)45.0), (float)width / (float)height, (float)0.1, (float)100.0)),
+m_projection(glm::perspective(glm::radians(CAMERA_FOV_DEGREES), (float)width / (float)height, CAMERA_NEAR_PLANE, CAMERA_FAR_PLANE)),
 p_skybox(nullptr),
 m_enable_shadows(false)
 {

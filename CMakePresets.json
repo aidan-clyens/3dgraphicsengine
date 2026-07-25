@@ -15,7 +15,8 @@
         "BUILD_OPENGL3_DEMOS": "OFF",
         "BUILD_BULLET2_DEMOS": "OFF",
         "BUILD_EXTRAS": "OFF",
-        "BUILD_UNIT_TESTS": "OFF"
+        "BUILD_UNIT_TESTS": "OFF",
+        "BUILD_BULLET3": "OFF"
       }
     },
     {
@@ -30,7 +31,8 @@
         "BUILD_OPENGL3_DEMOS": "OFF",
         "BUILD_BULLET2_DEMOS": "OFF",
         "BUILD_EXTRAS": "OFF",
-        "BUILD_UNIT_TESTS": "OFF"
+        "BUILD_UNIT_TESTS": "OFF",
+        "BUILD_BULLET3": "OFF"
       }
     },
     {

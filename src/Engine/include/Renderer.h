@@ -19,6 +19,11 @@ class Engine;
 class Mesh;
 class Camera;
 
+// Defines
+#define CAMERA_FOV_DEGREES 45.0f
+#define CAMERA_NEAR_PLANE 0.1f
+#define CAMERA_FAR_PLANE 100.0f
+
 // Structs
 typedef struct {
     float light_projection_size;

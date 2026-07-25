@@ -2,6 +2,7 @@
 
 // Includes
 #include <glm/glm.hpp>
+#include <ostream>
 #include <string>
 
 // Defines
@@ -17,6 +18,10 @@ typedef glm::mat4 mat4;
 std::string to_string(const vec2 &v);
 std::string to_string(const vec3 &v);
 std::string to_string(const vec4 &v);
+
+std::ostream &operator<<(std::ostream &os, const vec2 &v);
+std::ostream &operator<<(std::ostream &os, const vec3 &v);
+std::ostream &operator<<(std::ostream &os, const vec4 &v);
 
 // Enums
 typedef enum {

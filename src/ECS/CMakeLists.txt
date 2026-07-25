@@ -37,7 +37,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
-    glfw glad glm assimp BulletDynamics BulletCollision LinearMath
+    glfw glad glm assimp
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
