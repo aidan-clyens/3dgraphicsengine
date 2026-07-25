@@ -3,13 +3,7 @@
   "version": "0.1.0",
   "description": "3D-Graphics-Engine - A cross-platform video graphics library for real-time rendering.",
   "dependencies": [
-    "gtest",
-    "glfw3",
-    "glad",
-    "glm",
-    "assimp",
-    "bullet3",
-    "imgui"
+    "gtest"
   ],
   "builtin-baseline": "1d611efb49276c65d69fb6d010c2aaaf039322b0"
 }

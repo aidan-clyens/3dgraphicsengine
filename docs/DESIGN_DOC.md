@@ -4,7 +4,7 @@
 graph TD
   glm("glm")
   glad("glad")
-  glfw3("glfw3")
+  glfw("glfw")
   assimp("assimp")
   imgui("imgui")
   bullet3("bullet3")
@@ -19,7 +19,7 @@ graph TD
 
   ECS --> glm
   ECS --> glad
-  ECS --> glfw3
+  ECS --> glfw
   ECS --> assimp
 
   ECS --> Core
@@ -28,14 +28,14 @@ graph TD
   Mesh --> ECS
 
   Texture --> glad
-  Texture --> glfw3
+  Texture --> glfw
 
   Texture --> Core
   Texture --> ECS
 
   Engine --> glm
   Engine --> glad
-  Engine --> glfw3
+  Engine --> glfw
   Engine --> imgui
   Engine --> bullet3
 

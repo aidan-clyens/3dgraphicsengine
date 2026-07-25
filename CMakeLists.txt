@@ -18,27 +18,41 @@ elseif(UNIX AND NOT APPLE)
     add_compile_definitions(PLATFORM_LINUX)
 endif()
 
-# Find required packages
-find_package(PkgConfig)
+# All third-party dependencies are vendored under thirdparty/ and built
+# from source as static libraries so the installed package is self-contained.
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+
+if(UNIX AND NOT APPLE)
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+endif()
+
+# GLFW vendoring options
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_INSTALL ON CACHE BOOL "" FORCE)
+if(UNIX AND NOT APPLE)
+    set(GLFW_BUILD_WAYLAND ON CACHE BOOL "" FORCE)
+    set(GLFW_BUILD_X11 ON CACHE BOOL "" FORCE)
+endif()
+
+# Assimp vendoring options
+set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_SAMPLES OFF CACHE BOOL "" FORCE)
+set(ASSIMP_INSTALL ON CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_ZLIB ON CACHE BOOL "" FORCE)
 
 add_subdirectory(thirdparty/glad)
 add_subdirectory(thirdparty/glm)
 add_subdirectory(thirdparty/bullet3)
+add_subdirectory(thirdparty/glfw)
+add_subdirectory(thirdparty/assimp)
 
-if(WIN32)
-    find_package(glfw3 CONFIG REQUIRED)
+option(BUILD_TESTS "Build unit tests" OFF)
+if(BUILD_TESTS)
     find_package(GTest CONFIG REQUIRED)
-    find_package(glad CONFIG REQUIRED)
-    find_package(glm CONFIG REQUIRED)
-    find_package(assimp CONFIG REQUIRED)
-    find_package(Bullet CONFIG REQUIRED)
-    find_package(imgui CONFIG REQUIRED)
-else()
-    if(PkgConfig_FOUND)
-        pkg_check_modules(glfw3 REQUIRED IMPORTED_TARGET glfw3)
-        pkg_check_modules(assimp REQUIRED IMPORTED_TARGET assimp)
-    endif()
-    find_package(GTest REQUIRED)
+    enable_testing()
 endif()
 
 option(BUILD_EXAMPLES "Build examples" ON)
@@ -67,12 +81,46 @@ install(
         BulletDynamics
         BulletCollision
         LinearMath
+        glfw
+        assimp
+        zlibstatic
     EXPORT ${PROJECT_NAME}-targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     FILE_SET HEADERS DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+# glm and Bullet don't install their own headers by default when vendored as
+# a subdirectory (glm's install is gated behind GLM_BUILD_INSTALL, off for
+# non-master projects; Bullet's INSTALL_LIBS defaults off for MSVC project
+# files) but consumers still need them since Types.h/Physics.h/etc include
+# them directly, so install the header trees ourselves.
+install(
+    DIRECTORY thirdparty/glm/glm
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    PATTERN "CMakeLists.txt" EXCLUDE
+)
+install(
+    DIRECTORY thirdparty/bullet3/src/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    FILES_MATCHING PATTERN "*.h"
+)
+
+# imgui is compiled directly into Engine's sources rather than added as its
+# own subdirectory/target, so its headers (referenced unprefixed, e.g.
+# "imgui.h", by Engine's public DebugWindow.h) need installing explicitly too.
+install(FILES
+    thirdparty/imgui/imgui.h
+    thirdparty/imgui/imconfig.h
+    thirdparty/imgui/imgui_internal.h
+    thirdparty/imgui/imstb_rectpack.h
+    thirdparty/imgui/imstb_textedit.h
+    thirdparty/imgui/imstb_truetype.h
+    thirdparty/imgui/backends/imgui_impl_glfw.h
+    thirdparty/imgui/backends/imgui_impl_opengl3.h
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 # Export targets

@@ -63,11 +63,13 @@ This project implements a custom 3D graphics engine designed for real-time rende
 ## System Requirements
 
 ### Dependencies
-- **CMake 3.0+** - Build system
-- **C++14** compiler (MSVC, GCC, or Clang)
-- **OpenGL 3.3+** compatible graphics card
+- **CMake 3.25+** - Build system
+- **C++20** compiler (MSVC, GCC, or Clang)
+- **OpenGL 3.3+** compatible graphics card, with the system OpenGL library available (`find_package(OpenGL REQUIRED)` on the consumer side)
 
-### Third-Party Libraries (Included)
+All other dependencies are vendored under `thirdparty/` and built from source as static libraries as part of this project's own build, then bundled into the installed package (`.deb` on Ubuntu, NSIS installer on Windows). A consumer linking against the installed `3dgraphicsengine` CMake package needs nothing beyond a C++20 compiler and system OpenGL — no vcpkg, no apt `-dev` packages.
+
+### Third-Party Libraries (Vendored, statically linked)
 - **GLFW** - Window and input management
 - **GLAD** - OpenGL function loader
 - **GLM** - Mathematics library

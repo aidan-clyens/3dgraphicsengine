@@ -21,9 +21,17 @@ RUN apt-get install -y --no-install-recommends \
     mesa-utils \
     mesa-common-dev \
     libglew-dev \
-    libglfw3-dev \
     libgtest-dev \
-    libassimp-dev \
+    libx11-dev \
+    libxrandr-dev \
+    libxinerama-dev \
+    libxcursor-dev \
+    libxi-dev \
+    libxext-dev \
+    libwayland-dev \
+    libxkbcommon-dev \
+    wayland-protocols \
+    extra-cmake-modules \
     && rm -rf /var/lib/apt/lists/*
 
 # Default command

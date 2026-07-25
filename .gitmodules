@@ -7,3 +7,9 @@
 [submodule "thirdparty/bullet3"]
 	path = thirdparty/bullet3
 	url = https://github.com/bulletphysics/bullet3.git
+[submodule "thirdparty/glfw"]
+	path = thirdparty/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "thirdparty/assimp"]
+	path = thirdparty/assimp
+	url = https://github.com/assimp/assimp.git
