@@ -1,11 +1,8 @@
 // Includes
 #include "Engine.h"
-#include "CubeMesh.h"
 #include "Shader.h"
 #include "TextureCubeMap.h"
 #include "Light.h"
-#include "Mesh.h"
-#include "Model.h"
 #include "Timer.h"
 
 #include <iostream>
@@ -14,7 +11,6 @@
 #define SCREEN_WIDTH 1600
 #define SCREEN_HEIGHT 900
 
-#define WHITE vec3(1, 1, 1)
 #define GREY vec3(0.4, 0.4, 0.4)
 #define ORANGE vec3(1, 0.5, 0.31)
 #define BLUE vec3(0, 0.28, 1)
@@ -91,12 +87,12 @@ class Game : public Engine {
             transform.rotation = vec3(0, 0, 0);
             transform.size = vec3(50, 1, 50);
 
-            Object3D *object = this->create_cube(transform, GREY, 4);
+            Object3D *object = new Cube(transform, GREY, 4);
             object->set_name("Ground");
             this->add_object(object);
 
             // Skybox
-            this->set_skybox(this->create_cube(Transform(), m_skybox_texture));
+            this->set_skybox(new Cube(Transform(), m_skybox_texture));
 
             // Model
             transform.position = vec3(0, 0, 0);
@@ -121,57 +117,6 @@ class Game : public Engine {
                     p_input_manager->set_mouse_handled(true);
                 }
             }
-        }
-
-        /* create_cube
-         */
-        Object3D *create_cube(Transform transform, vec3 color, int shininess) {
-            // Configure material
-            Material material;
-            material.specular = WHITE;
-            material.ambient = color;
-            material.diffuse = color;
-            material.shininess = shininess;
-
-            // Create object
-            Object3D *cube = new Object3D(transform.position, transform.rotation, transform.size);
-            cube->add_component(COMP_MESH, new CubeMesh());
-
-            CubeMesh *mesh = (CubeMesh *)cube->get_component(COMP_MESH);
-
-            mesh->set_material(material);
-            mesh->set_transform(transform);
-
-            return cube;
-        }
-
-        /* create_cube
-         */
-        Object3D *create_cube(Transform transform, Texture texture) {
-            // Create object
-            Object3D *cube = new Object3D(transform.position, transform.rotation, transform.size);
-            cube->add_component(COMP_MESH, new CubeMesh());
-
-            CubeMesh *mesh = (CubeMesh *)cube->get_component(COMP_MESH);
-
-            mesh->set_texture(texture);
-            mesh->set_transform(transform);
-
-            return cube;
-        }
-
-        /* create_model
-         */
-        Object3D *create_model(Transform transform, const std::string &path) {
-            // Create object
-            Object3D *object = new Object3D(transform.position, transform.rotation, transform.size);
-            object->add_component(COMP_MODEL, new Model());
-
-            Model *model = (Model *)object->get_component(COMP_MODEL);
-            model->load_model(path);
-            model->set_transform(transform);
-
-            return object;
         }
 
     private:

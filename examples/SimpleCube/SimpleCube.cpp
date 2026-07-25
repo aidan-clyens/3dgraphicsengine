@@ -1,12 +1,9 @@
 // Includes
 #include "Engine.h"
-#include "SquareMesh.h"
-#include "CubeMesh.h"
 #include "Shader.h"
 #include "Texture2D.h"
 #include "TextureCubeMap.h"
 #include "Light.h"
-#include "Mesh.h"
 #include "Timer.h"
 #include "Logger.h"
 
@@ -16,7 +13,6 @@
 #define SCREEN_WIDTH 1600
 #define SCREEN_HEIGHT 900
 
-#define WHITE vec3(1, 1, 1)
 #define GREY vec3(0.4, 0.4, 0.4)
 #define ORANGE vec3(1, 0.5, 0.31)
 #define BLUE vec3(0, 0.28, 1)
@@ -118,19 +114,19 @@ class Game : public Engine {
             transform.rotation = vec3(0, 0, 0);
             transform.size = vec3(20, 1, 20);
 
-            Object3D *object = this->create_cube(transform, GREY, 4);
+            Object3D *object = new Cube(transform, GREY, 4);
             object->set_name("Ground");
             this->add_object(object);
 
             // Skybox
-            this->set_skybox(this->create_cube(Transform(), m_skybox_texture));
+            this->set_skybox(new Cube(Transform(), m_skybox_texture));
 
             // Cube 1
             transform.position = vec3(0, -1, -3);
             transform.rotation = vec3(0, 30, 0);
             transform.size = vec3(1, 1, 1);
 
-            object = this->create_cube(transform, m_texture_cube);
+            object = new Cube(transform, m_texture_cube);
             object->set_name("Cube 1");
             this->add_object(object);
 
@@ -139,7 +135,7 @@ class Game : public Engine {
             transform.rotation = vec3(0, -10, 0);
             transform.size = vec3(1, 4, 1);
 
-            object = this->create_cube(transform, BLUE, 4);
+            object = new Cube(transform, BLUE, 4);
             object->set_name("Cube 2");
             this->add_object(object);
 
@@ -148,7 +144,7 @@ class Game : public Engine {
             transform.rotation = vec3(0, 0, 0);
             transform.size = vec3(1, 1, 1);
 
-            object = this->create_square(transform, m_texture_2d);
+            object = new Square(transform, m_texture_2d);
             object->set_name("Square");
             this->add_object(object);
 
@@ -191,58 +187,6 @@ class Game : public Engine {
             light->set_light_strength(strength);
 
             return light_object;
-        }
-
-        /* create_cube
-         */
-        Object3D *create_cube(Transform transform, vec3 color, int shininess) {
-            // Configure material
-            Material material;
-            material.specular = WHITE;
-            material.ambient = color;
-            material.diffuse = color;
-            material.shininess = shininess;
-
-            // Create object
-            Object3D *cube = new Object3D(transform.position, transform.rotation, transform.size);
-            cube->add_component(COMP_MESH, new CubeMesh());
-
-            CubeMesh *mesh = (CubeMesh *)cube->get_component(COMP_MESH);
-
-            mesh->set_material(material);
-            mesh->set_transform(transform);
-
-            return cube;
-        }
-
-        /* create_cube
-         */
-        Object3D *create_cube(Transform transform, Texture texture) {
-            // Create object
-            Object3D *cube = new Object3D(transform.position, transform.rotation, transform.size);
-            cube->add_component(COMP_MESH, new CubeMesh());
-
-            CubeMesh *mesh = (CubeMesh *)cube->get_component(COMP_MESH);
-
-            mesh->set_texture(texture);
-            mesh->set_transform(transform);
-
-            return cube;
-        }
-
-        /* create_square
-         */
-        Object3D *create_square(Transform transform, Texture texture) {
-            // Create object
-            Object3D *square = new Object3D(transform.position, transform.rotation, transform.size);
-            square->add_component(COMP_MESH, new SquareMesh());
-
-            SquareMesh *mesh = (SquareMesh *)square->get_component(COMP_MESH);
-
-            mesh->set_texture(texture);
-            mesh->set_transform(transform);
-
-            return square;
         }
 
         /* create_camera

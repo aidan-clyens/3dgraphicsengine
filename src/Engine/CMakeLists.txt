@@ -19,6 +19,9 @@ target_sources(${PROJECT_NAME}
         include/Renderer.h
         include/Rigidbody.h
         include/DynamicCharacterController.h
+        include/Cube.h
+        include/Square.h
+        include/Circle.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -33,6 +36,9 @@ target_sources(${PROJECT_NAME} PRIVATE
     src/Renderer.cpp
     src/Rigidbody.cpp
     src/DynamicCharacterController.cpp
+    src/Cube.cpp
+    src/Square.cpp
+    src/Circle.cpp
 )
 
 target_sources(${PROJECT_NAME} PRIVATE

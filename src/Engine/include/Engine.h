@@ -12,6 +12,9 @@
 #include "Physics.h"
 #include "Light.h"
 #include "DebugWindow.h"
+#include "Cube.h"
+#include "Square.h"
+#include "Circle.h"
 
 #include <string>
 #include <vector>
@@ -38,6 +41,8 @@ class Engine : public EntityManager {
         void remove_object(Object3D *object);
         void get_objects(std::vector<Object3D*> &objects);
 
+        Object3D *create_model(Transform transform, const std::string &path);
+
         void set_directional_light(DirectionalLight light);
         DirectionalLight get_directional_light() const;
 
@@ -53,6 +58,8 @@ class Engine : public EntityManager {
         void set_shadows_enabled(bool enable);
 
         void set_debug_window_enabled(bool enable);
+
+        double get_delta_time() const;
 
         // To be implemented by user
         virtual void setup();

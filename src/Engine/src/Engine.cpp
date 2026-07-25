@@ -147,6 +147,19 @@ void Engine::get_objects(std::vector<Object3D *> &objects) {
     objects = m_objects;
 }
 
+/* create_model
+ */
+Object3D *Engine::create_model(Transform transform, const std::string &path) {
+    Object3D *object = new Object3D(transform.position, transform.rotation, transform.size);
+    object->add_component(COMP_MODEL, new Model());
+
+    Model *model = (Model *)object->get_component(COMP_MODEL);
+    model->load_model(path);
+    model->set_transform(transform);
+
+    return object;
+}
+
 /* set_directional_light
  */
 void Engine::set_directional_light(DirectionalLight light) {
@@ -205,6 +218,12 @@ void Engine::set_shadows_enabled(bool enable) {
  */
 void Engine::set_debug_window_enabled(bool enable) {
     m_renderer.set_debug_window_enabled(enable);
+}
+
+/* get_delta_time
+ */
+double Engine::get_delta_time() const {
+    return m_delta_time;
 }
 
 /* setup

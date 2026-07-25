@@ -78,6 +78,24 @@ All other dependencies are vendored under `thirdparty/` and built from source as
 - **ImGui** - Debug interface
 - **STB Image** - Image loading
 
+### Shaders
+
+`Renderer` loads its default GLSL shaders as `<path>/shaders/*.glsl`, where `<path>` is the 3rd argument to `Engine`'s constructor (empty by default, resolved relative to the process's current working directory at runtime — it is **not** a window title). The installed package ships these shaders as data at `<prefix>/share/3dgraphicsengine/shaders/`. A consumer using the CMake package can reference the installed location without hardcoding it:
+
+```cmake
+find_package(3dgraphicsengine CONFIG REQUIRED)
+# ${3dgraphicsengine_SHADERS_DIR} now points at <prefix>/share/3dgraphicsengine/shaders/
+```
+
+Either pass that directory (with a trailing slash) as the constructor's `path` argument, or copy it next to your own executable at build time, e.g.:
+
+```cmake
+add_custom_command(TARGET my_app POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${3dgraphicsengine_SHADERS_DIR}" "$<TARGET_FILE_DIR:my_app>/shaders"
+)
+```
+
 ## Building the Project
 
 ### Windows (Visual Studio)

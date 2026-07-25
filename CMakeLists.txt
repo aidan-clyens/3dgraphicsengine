@@ -67,6 +67,16 @@ endif()
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
+# Ship the default GLSL shaders as package data. Renderer resolves shader
+# paths as <path>/shaders/*.glsl where <path> is the Engine constructor's
+# 3rd argument (empty by default, resolved relative to the process's CWD) -
+# consumers point that argument at wherever this directory ends up installed,
+# or copy it next to their own executable.
+install(
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/shaders
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}
+)
+
 # Install library targets and header files
 install(
     TARGETS
@@ -131,10 +141,12 @@ install(EXPORT ${PROJECT_NAME}-targets
 )
 
 # Create package configuration file
+set(3DGRAPHICSENGINE_SHADERS_INSTALL_DIR ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/shaders)
 configure_package_config_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${PROJECT_NAME}-config.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
     INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+    PATH_VARS 3DGRAPHICSENGINE_SHADERS_INSTALL_DIR
 )
 
 # Create package version file
