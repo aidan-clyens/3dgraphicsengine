@@ -44,6 +44,8 @@ class Mesh : public Component {
 
         virtual void render();
 
+        virtual bool has_instance_colors() const { return false; }
+
         void set_transform(Transform transform);
 
         void set_shader(Shader &shader);

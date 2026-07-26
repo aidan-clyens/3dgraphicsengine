@@ -9,6 +9,7 @@ in VS_OUT {
     vec2 TexCoord;
     vec3 TexCoord3;
     vec4 FragPosLightSpace;
+    vec3 InstanceColor;
 } fs_in;
 
 out vec4 FragColor;
@@ -44,6 +45,7 @@ uniform int numberPointLights;
 
 uniform bool useTexture2D;
 uniform bool useTextureCube;
+uniform bool useInstanceColor;
 
 uniform sampler2D objectTexture;
 uniform samplerCube objectTextureCube;
@@ -93,13 +95,16 @@ vec3 CalculateLighting(Light light, vec3 lightDir, float attenuation)
         color = vec3(texture(objectTextureCube, fs_in.TexCoord3));
     }
 
+    vec3 ambientColor = useInstanceColor ? fs_in.InstanceColor : material.ambient;
+    vec3 diffuseColor = useInstanceColor ? fs_in.InstanceColor : material.diffuse;
+
     // ambient
-    vec3 ambient = light.ambient * material.ambient * attenuation;
+    vec3 ambient = light.ambient * ambientColor * attenuation;
 
     // diffuse
     vec3 norm = normalize(fs_in.Normal);
     float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse =  light.diffuse * diff * material.diffuse * attenuation;
+    vec3 diffuse =  light.diffuse * diff * diffuseColor * attenuation;
 
     // specular
     vec3 viewDir = normalize(viewPos - fs_in.FragPos);

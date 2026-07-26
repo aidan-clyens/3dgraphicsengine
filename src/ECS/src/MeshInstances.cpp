@@ -21,6 +21,8 @@ mat4 MeshInstances::build_model_matrix(Transform transform) {
 MeshInstances::MeshInstances(Mesh *instance):
 m_instance(instance)
 {
+    glGenBuffers(1, &m_color_buffer_object);
+
     m_num_vertices = instance->m_num_vertices;
 
     m_vertex_buffer.stride = instance->m_vertex_buffer.stride;
@@ -55,6 +57,8 @@ m_instance(instance)
 MeshInstances::MeshInstances(Mesh *instance, std::vector<Transform> transforms):
 m_instance(instance)
 {
+    glGenBuffers(1, &m_color_buffer_object);
+
     for (unsigned int i = 0; i < transforms.size(); i++) {
         m_models.push_back(build_model_matrix(transforms[i]));
     }
@@ -91,6 +95,8 @@ m_instance(instance)
 /* ~MeshInstances
  */
 MeshInstances::~MeshInstances() {
+    glDeleteBuffers(1, &m_color_buffer_object);
+
     delete m_instance;
 }
 
@@ -139,6 +145,16 @@ void MeshInstances::render() {
     glVertexAttribDivisor(5, 1);
     glVertexAttribDivisor(6, 1);
 
+    // Instance color buffer object
+    if (!m_colors.empty()) {
+        glBindBuffer(GL_ARRAY_BUFFER, m_color_buffer_object);
+        glBufferData(GL_ARRAY_BUFFER, m_colors.size() * sizeof(vec3), m_colors.data(), GL_STATIC_DRAW);
+
+        glVertexAttribPointer(7, 3, GL_FLOAT, GL_FALSE, sizeof(vec3), (void *)0);
+        glEnableVertexAttribArray(7);
+        glVertexAttribDivisor(7, 1);
+    }
+
     if (m_use_texture) {
         m_texture.enable();
     }
@@ -167,4 +183,10 @@ void MeshInstances::set_transforms(std::vector<Transform> transforms) {
     for (const Transform &transform : transforms) {
         m_models.push_back(build_model_matrix(transform));
     }
+}
+
+/* set_colors
+ */
+void MeshInstances::set_colors(std::vector<vec3> colors) {
+    m_colors = colors;
 }

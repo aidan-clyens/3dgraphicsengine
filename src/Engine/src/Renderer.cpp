@@ -256,6 +256,8 @@ void Renderer::render(std::vector<Mesh*> &meshes, std::vector<Light*> &lights, C
                 m_object_shader.set_vec3("material.specular", mesh->m_material.specular);
                 m_object_shader.set_float("material.shininess", mesh->m_material.shininess);
 
+                m_object_shader.set_bool("useInstanceColor", mesh->has_instance_colors());
+
                 // Pass directional lighting data to shader
                 m_object_shader.set_vec3("directionalLight.vector", m_directional_light.get_direction());
                 m_object_shader.set_vec3("directionalLight.ambient", m_directional_light.get_ambient());
