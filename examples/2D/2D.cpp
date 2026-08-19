@@ -19,7 +19,7 @@ public:
     void setup()
     {
         this->set_mouse_visible(true);
-        this->set_debug_window_enabled(false);
+        this->disable_debug_window();
         this->set_shadows_enabled(false);
 
         p_camera->set_position(vec3(0, 0, 10));

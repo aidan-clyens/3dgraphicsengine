@@ -64,7 +64,8 @@ public:
 
     void set_shadows_enabled(bool enable);
 
-    void set_debug_window_enabled(bool enable);
+    void enable_debug_window();
+    void disable_debug_window();
 
     double get_delta_time() const;
 
@@ -73,8 +74,8 @@ public:
     WorldBounds get_world_boundaries() const;
 
     // To be implemented by user
-    virtual void setup();
-    virtual void update();
+    virtual void setup() = 0;
+    virtual void update() = 0;
 
     void process_mouse_button(int button, int action, int mods);
     void process_mouse_input(double x, double y);

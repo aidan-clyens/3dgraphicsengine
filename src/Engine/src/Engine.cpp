@@ -252,11 +252,14 @@ void Engine::set_shadows_enabled(bool enable)
     m_renderer.set_shadows_enabled(enable);
 }
 
-/* set_debug_window_enabled
- */
-void Engine::set_debug_window_enabled(bool enable)
+void Engine::enable_debug_window()
 {
-    m_renderer.set_debug_window_enabled(enable);
+    m_renderer.set_debug_window_enabled(true);
+}
+
+void Engine::disable_debug_window()
+{
+    m_renderer.set_debug_window_enabled(false);
 }
 
 /* get_delta_time
@@ -295,18 +298,6 @@ WorldBounds Engine::get_world_boundaries() const
     bounds.max = vec2(camera_position.x + half_width, camera_position.y + half_height);
 
     return bounds;
-}
-
-/* setup
- */
-void Engine::setup()
-{
-}
-
-/* update
- */
-void Engine::update()
-{
 }
 
 /* process_mouse_button

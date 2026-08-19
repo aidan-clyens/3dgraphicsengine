@@ -2,30 +2,50 @@
 
 /* Cube
  */
-Cube::Cube(Transform transform, vec3 color, int shininess):
-Object3D(transform.position, transform.rotation, transform.size)
+Cube::Cube()
 {
-    Material material;
-    material.specular = vec3(1, 1, 1);
-    material.ambient = color;
-    material.diffuse = color;
-    material.shininess = shininess;
+  Transform transform;
+  transform.position = vec3(0, 0, 0);
+  transform.rotation = vec3(0, 0, 0);
+  transform.size = vec3(1, 1, 1);
 
-    this->add_component(COMP_MESH, new CubeMesh());
+  Material material;
+  material.specular = vec3(1, 1, 1);
+  material.ambient = vec3(255, 255, 255);
+  material.diffuse = vec3(255, 255, 255);
+  material.shininess = 1;
 
-    CubeMesh *mesh = (CubeMesh *)this->get_component(COMP_MESH);
-    mesh->set_material(material);
-    mesh->set_transform(transform);
+  this->add_component(COMP_MESH, new CubeMesh());
+
+  CubeMesh *mesh = (CubeMesh *)this->get_component(COMP_MESH);
+  mesh->set_material(material);
+  mesh->set_transform(transform);
 }
 
 /* Cube
  */
-Cube::Cube(Transform transform, Texture texture):
-Object3D(transform.position, transform.rotation, transform.size)
+Cube::Cube(Transform transform, vec3 color, int shininess) : Object3D(transform.position, transform.rotation, transform.size)
 {
-    this->add_component(COMP_MESH, new CubeMesh());
+  Material material;
+  material.specular = vec3(1, 1, 1);
+  material.ambient = color;
+  material.diffuse = color;
+  material.shininess = shininess;
 
-    CubeMesh *mesh = (CubeMesh *)this->get_component(COMP_MESH);
-    mesh->set_texture(texture);
-    mesh->set_transform(transform);
+  this->add_component(COMP_MESH, new CubeMesh());
+
+  CubeMesh *mesh = (CubeMesh *)this->get_component(COMP_MESH);
+  mesh->set_material(material);
+  mesh->set_transform(transform);
+}
+
+/* Cube
+ */
+Cube::Cube(Transform transform, Texture texture) : Object3D(transform.position, transform.rotation, transform.size)
+{
+  this->add_component(COMP_MESH, new CubeMesh());
+
+  CubeMesh *mesh = (CubeMesh *)this->get_component(COMP_MESH);
+  mesh->set_texture(texture);
+  mesh->set_transform(transform);
 }

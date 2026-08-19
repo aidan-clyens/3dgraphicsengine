@@ -79,7 +79,16 @@ public:
                 m_mouse_enabled = !m_mouse_enabled;
                 m_debug_window_enabled = !m_debug_window_enabled;
                 this->set_mouse_visible(m_mouse_enabled);
-                this->set_debug_window_enabled(m_debug_window_enabled);
+
+                if (m_debug_window_enabled)
+                {
+                    this->enable_debug_window();
+                }
+                else
+                {
+                    this->disable_debug_window();
+                }
+
                 Timer([]()
                       { key_ready = true; }, 100);
             }
@@ -93,8 +102,8 @@ public:
         m_mouse_enabled = false;
         m_debug_window_enabled = false;
 
+        this->disable_debug_window();
         this->set_mouse_visible(m_mouse_enabled);
-        this->set_debug_window_enabled(m_debug_window_enabled);
         this->set_shadows_enabled(true);
         this->set_background_color(SKY_BLUE);
 

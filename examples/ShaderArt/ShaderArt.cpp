@@ -15,75 +15,75 @@
 class Game : public Engine
 {
 public:
-    // Game(): Engine(900, 900) {}
+  // Game(): Engine(900, 900) {}
 
-    /* setup
-     */
-    void setup()
+  /* setup
+   */
+  void setup()
+  {
+    this->disable_debug_window();
+    this->set_mouse_visible(true);
+    this->set_shadows_enabled(false);
+
+    m_shader.load("examples/ShaderArt/shaders/background_vertex.glsl", "examples/ShaderArt/shaders/background_fragment.glsl");
+
+    if (!m_shader.is_valid())
     {
-        this->set_mouse_visible(true);
-        this->set_debug_window_enabled(false);
-        this->set_shadows_enabled(false);
-
-        m_shader.load("examples/ShaderArt/shaders/background_vertex.glsl", "examples/ShaderArt/shaders/background_fragment.glsl");
-
-        if (!m_shader.is_valid())
-        {
-            std::cerr << "Shader failed to load" << std::endl;
-        }
-
-        // Background
-        Transform transform;
-        transform.rotation = vec3(0, 0, 0);
-        transform.size = vec3(1, 1, 1);
-        transform.position = vec3(0, 0, 0);
-
-        this->add_object(this->create_square(transform, m_shader));
+      std::cerr << "Shader failed to load" << std::endl;
     }
 
-    /* update
-     */
-    void update()
-    {
-    }
+    // Background
+    Transform transform;
+    transform.rotation = vec3(0, 0, 0);
+    transform.size = vec3(1, 1, 1);
+    transform.position = vec3(0, 0, 0);
 
-    /* create_square
-     */
-    Object3D *create_square(Transform transform, Shader &shader)
-    {
-        // Create object
-        Object3D *square = new Object3D(transform.position, transform.rotation, transform.size);
-        square->add_component(COMP_MESH, new SquareMesh());
+    this->add_object(this->create_square(transform, m_shader));
+  }
 
-        SquareMesh *mesh = (SquareMesh *)square->get_component(COMP_MESH);
+  /* update
+   */
+  void update()
+  {
+  }
 
-        mesh->set_shader(shader);
-        mesh->set_transform(transform);
+  /* create_square
+   */
+  Object3D *create_square(Transform transform, Shader &shader)
+  {
+    // Create object
+    Object3D *square = new Object3D(transform.position, transform.rotation, transform.size);
+    square->add_component(COMP_MESH, new SquareMesh());
 
-        return square;
-    }
+    SquareMesh *mesh = (SquareMesh *)square->get_component(COMP_MESH);
+
+    mesh->set_shader(shader);
+    mesh->set_transform(transform);
+
+    return square;
+  }
 
 private:
-    Shader m_shader;
+  Shader m_shader;
 };
 
 /* main
  */
 int main(int argc, char **argv)
 {
-    (void)argc; // Unused
-    (void)argv; // Unused
+  (void)argc; // Unused
+  (void)argv; // Unused
 
-    Game game;
+  Game game;
 
-    if (!game.init())
-    {
-        std::cerr << "Game Engine failed to initialize" << std::endl;
-        return -1;
-    }
+  if (!game.init())
+  {
+    std::cerr << "Game Engine failed to initialize" << std::endl;
+    return -1;
+  }
 
-    game.start();
-    game.cleanup();
+  game.start();
+  game.cleanup();
 
-    return 0;
+  return 0;
 }
