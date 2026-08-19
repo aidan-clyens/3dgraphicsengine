@@ -6,16 +6,15 @@
 #include "Light.h"
 #include "Camera.h"
 
-
 #define BUTTON_SIZE ImVec2(100, 25)
 #define LISTBOX_SIZE ImVec2(200, 50)
-
 
 Engine *DebugWindow::p_engine = nullptr;
 
 /* init
  */
-void DebugWindow::init(Engine *engine) {
+void DebugWindow::init(Engine *engine)
+{
     p_engine = engine;
 
     IMGUI_CHECKVERSION();
@@ -32,7 +31,8 @@ void DebugWindow::init(Engine *engine) {
 
 /* close
  */
-void DebugWindow::close() {
+void DebugWindow::close()
+{
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
@@ -40,7 +40,8 @@ void DebugWindow::close() {
 
 /* create_window
  */
-void DebugWindow::create_window() {
+void DebugWindow::create_window()
+{
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
@@ -52,55 +53,65 @@ void DebugWindow::create_window() {
 
 /* render
  */
-void DebugWindow::render() {
+void DebugWindow::render()
+{
     ImGui::Render();
 }
 
 /* render_draw_data
  */
-void DebugWindow::render_draw_data() {
+void DebugWindow::render_draw_data()
+{
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 /* add_mouse_button_event
  */
-void DebugWindow::add_mouse_button_event(int button, int action) {
+void DebugWindow::add_mouse_button_event(int button, int action)
+{
     ImGuiIO &io = ImGui::GetIO();
     io.AddMouseButtonEvent(button, (action == 1));
 }
 
 /* want_capture_mouse
  */
-bool DebugWindow::want_capture_mouse() {
+bool DebugWindow::want_capture_mouse()
+{
     ImGuiIO &io = ImGui::GetIO();
     return io.WantCaptureMouse;
 }
 
 /* show_window
  */
-void DebugWindow::show_window(bool *open) {
+void DebugWindow::show_window(bool *open)
+{
     ImGuiWindowFlags window_flags = 0;
-    if (!ImGui::Begin("3D Engine", open, window_flags)) {
+    if (!ImGui::Begin("3D Engine", open, window_flags))
+    {
         ImGui::End();
         return;
     }
 
     // Scene
-    if (ImGui::CollapsingHeader("Scene")) {
+    if (ImGui::CollapsingHeader("Scene"))
+    {
         DebugWindow::show_scene();
     }
 
     // Objects
-    if (ImGui::CollapsingHeader("Objects")) {
+    if (ImGui::CollapsingHeader("Objects"))
+    {
         DebugWindow::show_objects();
 
-        if (ImGui::Button("New Object", BUTTON_SIZE)) {
+        if (ImGui::Button("New Object", BUTTON_SIZE))
+        {
             p_engine->add_object(new Object3D());
         }
     }
-    
+
     // Debug
-    if (ImGui::CollapsingHeader("Debug")) {
+    if (ImGui::CollapsingHeader("Debug"))
+    {
         DebugWindow::show_debug();
     }
 
@@ -109,7 +120,8 @@ void DebugWindow::show_window(bool *open) {
 
 /* show_scene
  */
-void DebugWindow::show_scene() {
+void DebugWindow::show_scene()
+{
     // Cameras
     ImGui::PushID("show camera");
     ImGui::Text("Main Camera");
@@ -166,30 +178,35 @@ void DebugWindow::show_scene() {
 
 /* show_cameras
  */
-void DebugWindow::show_cameras() {
+void DebugWindow::show_cameras()
+{
     ImGui::PushID("show cameras");
     ImGui::Text("Main Camera");
 
-    std::vector<Camera*> cameras;
+    std::vector<Camera *> cameras;
     p_engine->get_cameras(cameras);
 
-    static char* items[100];
-    for (size_t i = 0; i < cameras.size(); i++) {
+    static char *items[100];
+    for (size_t i = 0; i < cameras.size(); i++)
+    {
         char name[50];
-        sprintf(name, "Camera %ld", i);
+        sprintf(name, "Camera %zd", i);
         items[i] = name;
     }
 
-    for (size_t n = 0; n < cameras.size(); n++) {
-        std::cout << items[n] << std::endl; 
+    for (size_t n = 0; n < cameras.size(); n++)
+    {
+        std::cout << items[n] << std::endl;
     }
 
     static size_t item_current_idx = 0; // Here we store our selection data as an index.
-    if (ImGui::BeginListBox("", LISTBOX_SIZE)) {
-        for (size_t n = 0; n < cameras.size(); n++) {
+    if (ImGui::BeginListBox("", LISTBOX_SIZE))
+    {
+        for (size_t n = 0; n < cameras.size(); n++)
+        {
             const bool is_selected = (item_current_idx == n);
             if (ImGui::Selectable(items[n], is_selected))
-                item_current_idx = n;   
+                item_current_idx = n;
 
             // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
             if (is_selected)
@@ -202,19 +219,22 @@ void DebugWindow::show_cameras() {
 
 /* show_objects
  */
-void DebugWindow::show_objects() {
-    std::vector<Object3D*> objects;
+void DebugWindow::show_objects()
+{
+    std::vector<Object3D *> objects;
     p_engine->get_objects(objects);
 
     ImGui::PushID("show objects");
-    for (size_t i = 0; i < objects.size(); i++) {
+    for (size_t i = 0; i < objects.size(); i++)
+    {
         // char name[50];
         // sprintf(name, "Object %d", i);
 
         std::string name = objects[i]->get_name();
 
         ImGui::PushID(i);
-        if (ImGui::TreeNode(name.c_str())) {
+        if (ImGui::TreeNode(name.c_str()))
+        {
             // Transform
             DebugWindow::show_transform(objects[i]);
 
@@ -224,7 +244,8 @@ void DebugWindow::show_objects() {
             DebugWindow::show_components(objects[i]);
 
             // Delete Object Button
-            if (ImGui::Button("Delete Object", BUTTON_SIZE)) {
+            if (ImGui::Button("Delete Object", BUTTON_SIZE))
+            {
                 p_engine->remove_object(objects[i]);
             }
 
@@ -238,7 +259,8 @@ void DebugWindow::show_objects() {
 
 /* show_transform
  */
-void DebugWindow::show_transform(Object3D *object) {
+void DebugWindow::show_transform(Object3D *object)
+{
     // Transform
     vec3 position = object->get_position();
     vec3 rotation = object->get_rotation();
@@ -275,23 +297,28 @@ void DebugWindow::show_transform(Object3D *object) {
 
 /* show_components
  */
-void DebugWindow::show_components(Object3D *object) {
+void DebugWindow::show_components(Object3D *object)
+{
     // Model
-    if (object->has_component(COMP_MODEL)) {
-        Model *model = (Model*)object->get_component(COMP_MODEL);
+    if (object->has_component(COMP_MODEL))
+    {
+        Model *model = (Model *)object->get_component(COMP_MODEL);
 
         ImGui::Text("Model");
 
         DebugWindow::show_model(model);
 
-        if (ImGui::Button("Delete Model", BUTTON_SIZE)) {
+        if (ImGui::Button("Delete Model", BUTTON_SIZE))
+        {
             object->remove_component(COMP_MODEL);
         }
     }
-    else {
-        if (ImGui::Button("New Model", BUTTON_SIZE)) {
+    else
+    {
+        if (ImGui::Button("New Model", BUTTON_SIZE))
+        {
             object->add_component(COMP_MODEL, new Model());
-            Model *model = (Model*)object->get_component(COMP_MODEL);
+            Model *model = (Model *)object->get_component(COMP_MODEL);
             model->set_transform(object->get_transform());
         }
     }
@@ -299,20 +326,24 @@ void DebugWindow::show_components(Object3D *object) {
     ImGui::Separator();
 
     // Mesh
-    if (object->has_component(COMP_MESH)) {
-        Mesh *mesh = (Mesh*)object->get_component(COMP_MESH);
+    if (object->has_component(COMP_MESH))
+    {
+        Mesh *mesh = (Mesh *)object->get_component(COMP_MESH);
 
         ImGui::Text("Mesh");
 
         // Mesh
         DebugWindow::show_mesh(mesh);
 
-        if (ImGui::Button("Delete Mesh", BUTTON_SIZE)) {
+        if (ImGui::Button("Delete Mesh", BUTTON_SIZE))
+        {
             object->remove_component(COMP_MESH);
         }
     }
-    else {
-        if (ImGui::Button("New Mesh", BUTTON_SIZE)) {
+    else
+    {
+        if (ImGui::Button("New Mesh", BUTTON_SIZE))
+        {
             object->add_component(COMP_MESH, new CubeMesh());
             CubeMesh *mesh = (CubeMesh *)object->get_component(COMP_MESH);
             mesh->set_transform(object->get_transform());
@@ -322,32 +353,39 @@ void DebugWindow::show_components(Object3D *object) {
     ImGui::Separator();
 
     // Rigidbody
-    if (object->has_component(COMP_RIGIDBODY)) {
+    if (object->has_component(COMP_RIGIDBODY))
+    {
         ImGui::Text("Rigidbody");
     }
 
     // Camera
-    if (object->has_component(COMP_CAMERA)) {
+    if (object->has_component(COMP_CAMERA))
+    {
         ImGui::Text("Camera");
 
-        Camera *camera = (Camera*)object->get_component(COMP_CAMERA);
+        Camera *camera = (Camera *)object->get_component(COMP_CAMERA);
         Camera *main_camera = p_engine->get_camera();
 
         bool active = (camera == main_camera);
         ImGui::Text("Active: %s", active ? "True" : "False");
 
-        if (!active) {
-            if (ImGui::Button("Set Active", BUTTON_SIZE)) {
+        if (!active)
+        {
+            if (ImGui::Button("Set Active", BUTTON_SIZE))
+            {
                 p_engine->set_camera(camera);
             }
         }
 
-        if (ImGui::Button("Delete Camera", BUTTON_SIZE)) {
+        if (ImGui::Button("Delete Camera", BUTTON_SIZE))
+        {
             object->remove_component(COMP_CAMERA);
         }
     }
-    else {
-        if (ImGui::Button("New Camera", BUTTON_SIZE)) {
+    else
+    {
+        if (ImGui::Button("New Camera", BUTTON_SIZE))
+        {
             object->add_component(COMP_CAMERA, new Camera());
             Camera *camera = (Camera *)object->get_component(COMP_CAMERA);
             camera->set_position(object->get_transform().position);
@@ -357,7 +395,8 @@ void DebugWindow::show_components(Object3D *object) {
     ImGui::Separator();
 
     // Light
-    if (object->has_component(COMP_LIGHT)) {
+    if (object->has_component(COMP_LIGHT))
+    {
         Light *light = (Light *)object->get_component(COMP_LIGHT);
 
         ImGui::Text("Light");
@@ -365,12 +404,15 @@ void DebugWindow::show_components(Object3D *object) {
         // Light
         DebugWindow::show_light(light);
 
-        if (ImGui::Button("Delete Light", BUTTON_SIZE)) {
+        if (ImGui::Button("Delete Light", BUTTON_SIZE))
+        {
             object->remove_component(COMP_LIGHT);
         }
     }
-    else {
-        if (ImGui::Button("New Light", BUTTON_SIZE)) {
+    else
+    {
+        if (ImGui::Button("New Light", BUTTON_SIZE))
+        {
             object->add_component(COMP_LIGHT, new PointLight());
             PointLight *light = (PointLight *)object->get_component(COMP_LIGHT);
             light->set_position(object->get_transform().position);
@@ -382,15 +424,17 @@ void DebugWindow::show_components(Object3D *object) {
 
 /* show_model
  */
-void DebugWindow::show_model(Model *model) {
+void DebugWindow::show_model(Model *model)
+{
     ImGui::PushID("model");
 
-    std::vector<Mesh*> meshes;
+    std::vector<Mesh *> meshes;
     model->get_meshes(meshes);
-    
+
     ImGui::Text("Meshes");
 
-    for (size_t i = 0; i < meshes.size(); i++) {
+    for (size_t i = 0; i < meshes.size(); i++)
+    {
         ImGui::PushID(i);
         DebugWindow::show_mesh(meshes[i]);
         ImGui::Spacing();
@@ -402,29 +446,33 @@ void DebugWindow::show_model(Model *model) {
 
 /* show_mesh
  */
-void DebugWindow::show_mesh(Mesh *mesh) {
+void DebugWindow::show_mesh(Mesh *mesh)
+{
     ImGui::PushID("mesh");
 
     ImGui::Text("Mesh Type: ");
     ImGui::SameLine();
 
-    switch (mesh->get_material_type()) {
-        case MATERIAL_COLOR:
-            ImGui::Text("Colour");
-            break;
-        case MATERIAL_TEXTURE_2D:
-            ImGui::Text("Texture 2D");
-            break;
-        case MATERIAL_TEXTURE_CUBE:
-            ImGui::Text("Texture Cube");
-            break;
-        default:
-            break;
+    switch (mesh->get_material_type())
+    {
+    case MATERIAL_COLOR:
+        ImGui::Text("Colour");
+        break;
+    case MATERIAL_TEXTURE_2D:
+        ImGui::Text("Texture 2D");
+        break;
+    case MATERIAL_TEXTURE_CUBE:
+        ImGui::Text("Texture Cube");
+        break;
+    default:
+        break;
     }
 
     // Texture 2D
-    if (mesh->get_material_type() == MATERIAL_TEXTURE_2D) {
-        if (mesh->has_texture()) {
+    if (mesh->get_material_type() == MATERIAL_TEXTURE_2D)
+    {
+        if (mesh->has_texture())
+        {
             Texture texture = mesh->get_texture();
             DebugWindow::show_image(texture);
         }
@@ -462,14 +510,17 @@ void DebugWindow::show_mesh(Mesh *mesh) {
 
     mesh->set_material(material);
 
-    if (ImGui::TreeNode("Debug")) {
+    if (ImGui::TreeNode("Debug"))
+    {
         ImGui::Text("Vertices: %d", mesh->get_num_vertices());
 
-        if (ImGui::Button("Dump Vertices", BUTTON_SIZE)) {
+        if (ImGui::Button("Dump Vertices", BUTTON_SIZE))
+        {
             mesh->dump_vertices();
         }
 
-        if (ImGui::Button("Dump Normals", BUTTON_SIZE)) {
+        if (ImGui::Button("Dump Normals", BUTTON_SIZE))
+        {
             mesh->dump_normals();
         }
 
@@ -481,7 +532,8 @@ void DebugWindow::show_mesh(Mesh *mesh) {
 
 /* show_light
  */
-void DebugWindow::show_light(Light *light) {
+void DebugWindow::show_light(Light *light)
+{
     ImGui::PushID("light");
 
     vec3 ambient = light->get_ambient();
@@ -518,7 +570,8 @@ void DebugWindow::show_light(Light *light) {
 
 /* show_debug
  */
-void DebugWindow::show_debug() {
+void DebugWindow::show_debug()
+{
     ImGui::PushID("debug");
 
     ImGui::Text("Lighting Matrix Info");
@@ -554,7 +607,8 @@ void DebugWindow::show_debug() {
 
 /* show_float
  */
-float DebugWindow::show_float(const float value, float step, float min, float max) {
+float DebugWindow::show_float(const float value, float step, float min, float max)
+{
     float new_value = value;
     ImGui::DragScalar("", ImGuiDataType_Float, &new_value, step, &min, &max, "%.2f");
     return new_value;
@@ -562,7 +616,8 @@ float DebugWindow::show_float(const float value, float step, float min, float ma
 
 /* show_vec3
  */
-vec3 DebugWindow::show_vec3(const vec3 vector, float step, float min, float max) {
+vec3 DebugWindow::show_vec3(const vec3 vector, float step, float min, float max)
+{
     float vector_v4[4] = {vector.x, vector.y, vector.z, 1};
     ImGui::DragFloat3("", vector_v4, step, min, max, "%.2f");
     return vec3(vector_v4[0], vector_v4[1], vector_v4[2]);
@@ -570,7 +625,8 @@ vec3 DebugWindow::show_vec3(const vec3 vector, float step, float min, float max)
 
 /* show_color3
  */
-vec3 DebugWindow::show_color3(const vec3 color, ImGuiColorEditFlags flags) {
+vec3 DebugWindow::show_color3(const vec3 color, ImGuiColorEditFlags flags)
+{
     ImVec4 color_v4 = ImVec4(color.x, color.y, color.z, 1);
     ImGui::ColorEdit3("", (float *)&color_v4, flags);
     return vec3(color_v4.x, color_v4.y, color_v4.z);
@@ -578,7 +634,8 @@ vec3 DebugWindow::show_color3(const vec3 color, ImGuiColorEditFlags flags) {
 
 /* show_image
  */
-void DebugWindow::show_image(const Texture texture) {
+void DebugWindow::show_image(const Texture texture)
+{
     ImGuiIO &io = ImGui::GetIO();
     ImVec2 pos = ImGui::GetCursorScreenPos();
 
@@ -587,16 +644,29 @@ void DebugWindow::show_image(const Texture texture) {
     float height = (float)texture.get_height();
 
     ImGui::Image((void *)(intptr_t)texture_id, ImVec2(width, height));
-    if (ImGui::IsItemHovered()) {
+    if (ImGui::IsItemHovered())
+    {
         ImGui::BeginTooltip();
         float region_sz = 32.0f;
         float region_x = io.MousePos.x - pos.x - region_sz * 0.5f;
         float region_y = io.MousePos.y - pos.y - region_sz * 0.5f;
         float zoom = 4.0f;
-        if (region_x < 0.0f) { region_x = 0.0f; }
-        else if (region_x > width - region_sz) { region_x = width - region_sz; }
-        if (region_y < 0.0f) { region_y = 0.0f; }
-        else if (region_y > height - region_sz) { region_y = height - region_sz; }
+        if (region_x < 0.0f)
+        {
+            region_x = 0.0f;
+        }
+        else if (region_x > width - region_sz)
+        {
+            region_x = width - region_sz;
+        }
+        if (region_y < 0.0f)
+        {
+            region_y = 0.0f;
+        }
+        else if (region_y > height - region_sz)
+        {
+            region_y = height - region_sz;
+        }
         ImGui::Text("Min: (%.2f, %.2f)", region_x, region_y);
         ImGui::Text("Max: (%.2f, %.2f)", region_x + region_sz, region_y + region_sz);
         ImVec2 uv0 = ImVec2((region_x) / width, (region_y) / height);

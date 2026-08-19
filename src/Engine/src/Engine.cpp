@@ -7,24 +7,24 @@
 
 /* Engine
  */
-Engine::Engine(int width, int height, const std::string &path):
-p_input_manager(InputManager::get_instance()),
-p_camera(new Camera(vec3(0, 0, 0))),
-m_renderer(width, height, path)
+Engine::Engine(int width, int height, const std::string &path) : p_input_manager(InputManager::get_instance()),
+                                                                 p_camera(new Camera(vec3(0, 0, 0))),
+                                                                 m_renderer(width, height, path)
 {
-
 }
 
 /* ~Engine
  */
-Engine::~Engine() {
-
+Engine::~Engine()
+{
 }
 
 /* init
  */
-bool Engine::init() {
-    if (!m_renderer.init(this)) {
+bool Engine::init()
+{
+    if (!m_renderer.init(this))
+    {
         LOG_ERROR("Engine: init - Failed to initialize Renderer! Exiting...");
         m_renderer.close();
         return false;
@@ -47,7 +47,8 @@ bool Engine::init() {
 
 /* start
  */
-void Engine::start() {
+void Engine::start()
+{
     this->setup();
 
     LOG_INFO("Engine: start - Starting game loop...");
@@ -56,7 +57,8 @@ void Engine::start() {
     double current_frame = 0;
     double last_frame = 0;
     m_running = true;
-    while (!m_renderer.is_window_closed() && m_running) {
+    while (!m_renderer.is_window_closed() && m_running)
+    {
         current_frame = glfwGetTime();
         m_delta_time = current_frame - last_frame;
         last_frame = current_frame;
@@ -72,8 +74,10 @@ void Engine::start() {
 
 /* cleanup
  */
-void Engine::cleanup() {
-    for (Object3D *object : m_objects) {
+void Engine::cleanup()
+{
+    for (Object3D *object : m_objects)
+    {
         delete object;
     }
 
@@ -87,64 +91,77 @@ void Engine::cleanup() {
 
 /* add_object
  */
-void Engine::add_object(Object3D *object) {
+void Engine::add_object(Object3D *object)
+{
     object->assign_entity_manager(this);
     m_objects.push_back(object);
 
     LOG_INFO("Engine: add_object - ", object->to_string());
 
-    if (object->has_component(COMP_MESH)) {
+    if (object->has_component(COMP_MESH))
+    {
         this->handle_add_component(object, COMP_MESH);
     }
 
 #ifdef BUILD_BULLET3
-    if (object->has_component(COMP_RIGIDBODY)) {
+    if (object->has_component(COMP_RIGIDBODY))
+    {
         this->handle_add_component(object, COMP_RIGIDBODY);
     }
 #endif
 
-    if (object->has_component(COMP_CAMERA)) {
+    if (object->has_component(COMP_CAMERA))
+    {
         this->handle_add_component(object, COMP_CAMERA);
     }
 
-    if (object->has_component(COMP_LIGHT)) {
+    if (object->has_component(COMP_LIGHT))
+    {
         this->handle_add_component(object, COMP_LIGHT);
     }
 
-    if (object->has_component(COMP_MODEL)) {
+    if (object->has_component(COMP_MODEL))
+    {
         this->handle_add_component(object, COMP_MODEL);
     }
 }
 
 /* remove_object
  */
-void Engine::remove_object(Object3D *object) {
+void Engine::remove_object(Object3D *object)
+{
     // Remove components
-    if (object->has_component(COMP_MESH)) {
+    if (object->has_component(COMP_MESH))
+    {
         this->handle_remove_component(object, COMP_MESH);
     }
 
 #ifdef BUILD_BULLET3
-    if (object->has_component(COMP_RIGIDBODY)) {
+    if (object->has_component(COMP_RIGIDBODY))
+    {
         this->handle_remove_component(object, COMP_RIGIDBODY);
     }
 #endif
 
-    if (object->has_component(COMP_CAMERA)) {
+    if (object->has_component(COMP_CAMERA))
+    {
         this->handle_remove_component(object, COMP_CAMERA);
     }
 
-    if (object->has_component(COMP_LIGHT)) {
+    if (object->has_component(COMP_LIGHT))
+    {
         this->handle_remove_component(object, COMP_LIGHT);
     }
 
-    if (object->has_component(COMP_MODEL)) {
+    if (object->has_component(COMP_MODEL))
+    {
         this->handle_remove_component(object, COMP_MODEL);
     }
 
     // Remove object
     auto it = std::find(m_objects.begin(), m_objects.end(), object);
-    if (it != m_objects.end()) {
+    if (it != m_objects.end())
+    {
         m_objects.erase(it);
     }
 
@@ -153,13 +170,15 @@ void Engine::remove_object(Object3D *object) {
 
 /* get_objects
  */
-void Engine::get_objects(std::vector<Object3D *> &objects) {
+void Engine::get_objects(std::vector<Object3D *> &objects)
+{
     objects = m_objects;
 }
 
 /* create_model
  */
-Object3D *Engine::create_model(Transform transform, const std::string &path) {
+Object3D *Engine::create_model(Transform transform, const std::string &path)
+{
     Object3D *object = new Object3D(transform.position, transform.rotation, transform.size);
     object->add_component(COMP_MODEL, new Model());
 
@@ -172,73 +191,85 @@ Object3D *Engine::create_model(Transform transform, const std::string &path) {
 
 /* set_directional_light
  */
-void Engine::set_directional_light(DirectionalLight light) {
+void Engine::set_directional_light(DirectionalLight light)
+{
     m_renderer.set_directional_light(light);
 }
 
 /* get_directional_light
  */
-DirectionalLight Engine::get_directional_light() const {
+DirectionalLight Engine::get_directional_light() const
+{
     return m_renderer.get_directional_light();
 }
 
 /* set_background_color
  */
-void Engine::set_background_color(vec3 color) {
+void Engine::set_background_color(vec3 color)
+{
     m_renderer.set_background_color(color);
 }
 
 /* set_skybox
  */
-void Engine::set_skybox(Object3D *skybox) {
+void Engine::set_skybox(Object3D *skybox)
+{
     m_renderer.set_skybox(skybox);
 }
 
 /* set_camera
  */
-void Engine::set_camera(Camera *camera) {
+void Engine::set_camera(Camera *camera)
+{
     p_camera = camera;
 }
 
 /* get_cameras
  */
-void Engine::get_cameras(std::vector<Camera*> &cameras) {
+void Engine::get_cameras(std::vector<Camera *> &cameras)
+{
     cameras = m_cameras;
 }
 
 /* get_camera
  */
-Camera *Engine::get_camera() {
+Camera *Engine::get_camera()
+{
     return p_camera;
 }
 
 /* set_mouse_visible
  */
-void Engine::set_mouse_visible(bool value) {
+void Engine::set_mouse_visible(bool value)
+{
     m_renderer.set_mouse_visible(value);
 }
 
 /* set_shadows_enabled
  */
-void Engine::set_shadows_enabled(bool enable) {
+void Engine::set_shadows_enabled(bool enable)
+{
     m_renderer.set_shadows_enabled(enable);
 }
 
 /* set_debug_window_enabled
  */
-void Engine::set_debug_window_enabled(bool enable) {
+void Engine::set_debug_window_enabled(bool enable)
+{
     m_renderer.set_debug_window_enabled(enable);
 }
 
 /* get_delta_time
  */
-double Engine::get_delta_time() const {
+double Engine::get_delta_time() const
+{
     return m_delta_time;
 }
 
 /* get_screen_dimensions
  */
-vec2 Engine::get_screen_dimensions() const {
+vec2 Engine::get_screen_dimensions() const
+{
     return m_renderer.get_screen_size();
 }
 
@@ -248,7 +279,8 @@ vec2 Engine::get_screen_dimensions() const {
  * projection is a fixed perspective, so this widens/narrows with distance -
  * it is not a fixed rectangle for arbitrary depths).
  */
-WorldBounds Engine::get_world_boundaries() const {
+WorldBounds Engine::get_world_boundaries() const
+{
     vec3 camera_position = p_camera->get_position();
     vec2 screen_size = m_renderer.get_screen_size();
 
@@ -267,172 +299,205 @@ WorldBounds Engine::get_world_boundaries() const {
 
 /* setup
  */
-void Engine::setup() {
-
+void Engine::setup()
+{
 }
 
 /* update
  */
-void Engine::update() {
-
+void Engine::update()
+{
 }
 
 /* process_mouse_button
  */
-void Engine::process_mouse_button(int button, int action, int mods) {
+void Engine::process_mouse_button(int button, int action, int mods)
+{
     (void)mods;
     DebugWindow::add_mouse_button_event(button, action);
 }
 
 /* process_mouse_input
  */
-void Engine::process_mouse_input(double x, double y) {
+void Engine::process_mouse_input(double x, double y)
+{
     p_input_manager->process_mouse_input(x, y);
 }
 
 /* get_window
  */
-GLFWwindow *Engine::get_window() {
+GLFWwindow *Engine::get_window()
+{
     return m_renderer.get_window();
 }
 
 /* get_lighting_info
  */
-LightingInfo Engine::get_lighting_info() const {
+LightingInfo Engine::get_lighting_info() const
+{
     return m_renderer.get_lighting_info();
 }
 
 /* set_lighting_info
  */
-void Engine::set_lighting_info(LightingInfo info) {
+void Engine::set_lighting_info(LightingInfo info)
+{
     m_renderer.set_lighting_info(info);
 }
 
 /* handle_add_component
  */
-void Engine::handle_add_component(Entity *entity, eComponentType type) {
+void Engine::handle_add_component(Entity *entity, eComponentType type)
+{
     LOG_INFO("Engine: handle_add_component - Adding Component type: ", component_type_to_string(type));
 
-    if (entity->has_component(type)) {
-        switch (type) {
-            case COMP_MESH: {
-                Mesh *mesh = (Mesh*)entity->get_component(type);
-                if (std::find(m_meshes.begin(), m_meshes.end(), mesh) == m_meshes.end()) {
-                    m_meshes.push_back(mesh);
-                    LOG_INFO("Engine: handle_add_component - Added ", mesh->to_string());
-                }
-                break;
+    if (entity->has_component(type))
+    {
+        switch (type)
+        {
+        case COMP_MESH:
+        {
+            Mesh *mesh = (Mesh *)entity->get_component(type);
+            if (std::find(m_meshes.begin(), m_meshes.end(), mesh) == m_meshes.end())
+            {
+                m_meshes.push_back(mesh);
+                LOG_INFO("Engine: handle_add_component - Added ", mesh->to_string());
             }
+            break;
+        }
 #ifdef BUILD_BULLET3
-            case COMP_RIGIDBODY: {
-                Rigidbody *rigidbody = (Rigidbody *)entity->get_component(type);
-                m_physics.add_rigid_body(rigidbody);
-                break;
-            }
+        case COMP_RIGIDBODY:
+        {
+            Rigidbody *rigidbody = (Rigidbody *)entity->get_component(type);
+            m_physics.add_rigid_body(rigidbody);
+            break;
+        }
 #endif
-            case COMP_CAMERA: {
-                Camera *camera = (Camera*)entity->get_component(type);
-                if (std::find(m_cameras.begin(), m_cameras.end(), camera) == m_cameras.end()) {
-                    m_cameras.push_back(camera);
-                }
-                break;
+        case COMP_CAMERA:
+        {
+            Camera *camera = (Camera *)entity->get_component(type);
+            if (std::find(m_cameras.begin(), m_cameras.end(), camera) == m_cameras.end())
+            {
+                m_cameras.push_back(camera);
             }
-            case COMP_LIGHT: {
-                Light *light = (Light*)entity->get_component(type);
-                if (std::find(m_lights.begin(), m_lights.end(), light) == m_lights.end()) {
-                    m_lights.push_back(light);
-                }
-                break;
+            break;
+        }
+        case COMP_LIGHT:
+        {
+            Light *light = (Light *)entity->get_component(type);
+            if (std::find(m_lights.begin(), m_lights.end(), light) == m_lights.end())
+            {
+                m_lights.push_back(light);
             }
-            case COMP_MODEL: {
-                Model *model = (Model*)entity->get_component(type);
+            break;
+        }
+        case COMP_MODEL:
+        {
+            Model *model = (Model *)entity->get_component(type);
 
-                std::vector<Mesh*> meshes;
-                model->get_meshes(meshes);
+            std::vector<Mesh *> meshes;
+            model->get_meshes(meshes);
 
-                for (unsigned int i = 0; i < meshes.size(); i++) {
-                    if (std::find(m_meshes.begin(), m_meshes.end(), meshes[i]) == m_meshes.end()) {
-                        m_meshes.push_back(meshes[i]);
-                    }
+            for (unsigned int i = 0; i < meshes.size(); i++)
+            {
+                if (std::find(m_meshes.begin(), m_meshes.end(), meshes[i]) == m_meshes.end())
+                {
+                    m_meshes.push_back(meshes[i]);
                 }
-                break;
             }
-            default:
-                break;
+            break;
+        }
+        default:
+            break;
         }
     }
 }
 
 /* handle_remove_component
  */
-void Engine::handle_remove_component(Entity *entity, eComponentType type) {
+void Engine::handle_remove_component(Entity *entity, eComponentType type)
+{
     LOG_INFO("Engine: handle_remove_component - Removing Component type: ", type);
 
-    if (entity->has_component(type)) {
-        switch (type) {
-            case COMP_MESH: {
-                Mesh *mesh = (Mesh*)entity->get_component(type);
-                auto it = std::find(m_meshes.begin(), m_meshes.end(), mesh);
-                if (it != m_meshes.end()) {
-                    m_meshes.erase(it);
-                    LOG_INFO("Engine: handle_remove_component - Erased ", mesh->to_string());
-                }
-                break;
+    if (entity->has_component(type))
+    {
+        switch (type)
+        {
+        case COMP_MESH:
+        {
+            Mesh *mesh = (Mesh *)entity->get_component(type);
+            auto it = std::find(m_meshes.begin(), m_meshes.end(), mesh);
+            if (it != m_meshes.end())
+            {
+                m_meshes.erase(it);
+                LOG_INFO("Engine: handle_remove_component - Erased ", mesh->to_string());
             }
+            break;
+        }
 #ifdef BUILD_BULLET3
-            case COMP_RIGIDBODY: {
-                Rigidbody *rigidbody = (Rigidbody *)entity->get_component(type);
-                (void)rigidbody;
-                // TODO - Implement remove_component - Rigidbody
-                break;
-            }
+        case COMP_RIGIDBODY:
+        {
+            Rigidbody *rigidbody = (Rigidbody *)entity->get_component(type);
+            (void)rigidbody;
+            // TODO - Implement remove_component - Rigidbody
+            break;
+        }
 #endif
-            case COMP_CAMERA: {
-                Camera *camera = (Camera*)entity->get_component(type);
-                auto it = std::find(m_cameras.begin(), m_cameras.end(), camera);
-                if (it != m_cameras.end()) {
-                    m_cameras.erase(it);
-                }
-                break;
+        case COMP_CAMERA:
+        {
+            Camera *camera = (Camera *)entity->get_component(type);
+            auto it = std::find(m_cameras.begin(), m_cameras.end(), camera);
+            if (it != m_cameras.end())
+            {
+                m_cameras.erase(it);
             }
-            case COMP_LIGHT: {
-                Light *light = (Light*)entity->get_component(type);
-                auto it = std::find(m_lights.begin(), m_lights.end(), light);
-                if (it != m_lights.end()) {
-                    m_lights.erase(it);
-                }
-                break;
+            break;
+        }
+        case COMP_LIGHT:
+        {
+            Light *light = (Light *)entity->get_component(type);
+            auto it = std::find(m_lights.begin(), m_lights.end(), light);
+            if (it != m_lights.end())
+            {
+                m_lights.erase(it);
             }
-            case COMP_MODEL: {
-                Model *model = (Model*)entity->get_component(type);
+            break;
+        }
+        case COMP_MODEL:
+        {
+            Model *model = (Model *)entity->get_component(type);
 
-                std::vector<Mesh*> meshes;
-                model->get_meshes(meshes);
+            std::vector<Mesh *> meshes;
+            model->get_meshes(meshes);
 
-                for (unsigned int i = 0; i < meshes.size(); i++) {
-                    auto it = std::find(m_meshes.begin(), m_meshes.end(), meshes[i]);
-                    if (it != m_meshes.end()) {
-                        m_meshes.erase(it);
-                    }
+            for (unsigned int i = 0; i < meshes.size(); i++)
+            {
+                auto it = std::find(m_meshes.begin(), m_meshes.end(), meshes[i]);
+                if (it != m_meshes.end())
+                {
+                    m_meshes.erase(it);
                 }
-                break;
             }
-            default:
-                break;
+            break;
+        }
+        default:
+            break;
         }
     }
 }
 
 /* _process_mouse_button
  */
-void Engine::_process_mouse_button(GLFWwindow *window, int button, int action, int mods) {
-    Engine *engine = static_cast<Engine*>(glfwGetWindowUserPointer(window));
+void Engine::_process_mouse_button(GLFWwindow *window, int button, int action, int mods)
+{
+    Engine *engine = static_cast<Engine *>(glfwGetWindowUserPointer(window));
     engine->process_mouse_button(button, action, mods);
 }
 
 /* _process_mouse_input
  */
-void Engine::_process_mouse_input(GLFWwindow *window, double x, double y) {
-    Engine *engine = static_cast<Engine*>(glfwGetWindowUserPointer(window));
+void Engine::_process_mouse_input(GLFWwindow *window, double x, double y)
+{
+    Engine *engine = static_cast<Engine *>(glfwGetWindowUserPointer(window));
     engine->process_mouse_input(x, y);
 }

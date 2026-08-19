@@ -4,7 +4,8 @@
 
 /* build_model_matrix
  */
-mat4 MeshInstances::build_model_matrix(Transform transform) {
+mat4 MeshInstances::build_model_matrix(Transform transform)
+{
     mat4 model = mat4(1.0);
 
     model = glm::translate(model, transform.position);
@@ -18,8 +19,7 @@ mat4 MeshInstances::build_model_matrix(Transform transform) {
 
 /* MeshInstances
  */
-MeshInstances::MeshInstances(Mesh *instance):
-m_instance(instance)
+MeshInstances::MeshInstances(Mesh *instance) : m_instance(instance)
 {
     glGenBuffers(1, &m_color_buffer_object);
 
@@ -41,11 +41,13 @@ m_instance(instance)
     memcpy(m_normal_buffer.data, instance->m_normal_buffer.data, m_normal_buffer.size);
     memcpy(m_uv_buffer.data, instance->m_uv_buffer.data, m_uv_buffer.size);
 
-    if (instance->m_use_shader) {
+    if (instance->m_use_shader)
+    {
         this->set_shader(instance->m_shader);
     }
 
-    if (instance->m_use_texture) {
+    if (instance->m_use_texture)
+    {
         this->set_texture(instance->m_texture);
     }
 
@@ -54,12 +56,12 @@ m_instance(instance)
 
 /* MeshInstances
  */
-MeshInstances::MeshInstances(Mesh *instance, std::vector<Transform> transforms):
-m_instance(instance)
+MeshInstances::MeshInstances(Mesh *instance, std::vector<Transform> transforms) : m_instance(instance)
 {
     glGenBuffers(1, &m_color_buffer_object);
 
-    for (unsigned int i = 0; i < transforms.size(); i++) {
+    for (unsigned int i = 0; i < transforms.size(); i++)
+    {
         m_models.push_back(build_model_matrix(transforms[i]));
     }
 
@@ -81,11 +83,13 @@ m_instance(instance)
     memcpy(m_normal_buffer.data, instance->m_normal_buffer.data, m_normal_buffer.size);
     memcpy(m_uv_buffer.data, instance->m_uv_buffer.data, m_uv_buffer.size);
 
-    if (instance->m_use_shader) {
+    if (instance->m_use_shader)
+    {
         this->set_shader(instance->m_shader);
     }
 
-    if (instance->m_use_texture) {
+    if (instance->m_use_texture)
+    {
         this->set_texture(instance->m_texture);
     }
 
@@ -94,7 +98,8 @@ m_instance(instance)
 
 /* ~MeshInstances
  */
-MeshInstances::~MeshInstances() {
+MeshInstances::~MeshInstances()
+{
     glDeleteBuffers(1, &m_color_buffer_object);
 
     delete m_instance;
@@ -102,7 +107,8 @@ MeshInstances::~MeshInstances() {
 
 /* render
  */
-void MeshInstances::render() {
+void MeshInstances::render()
+{
     if (m_num_vertices == 0)
         return;
 
@@ -146,7 +152,8 @@ void MeshInstances::render() {
     glVertexAttribDivisor(6, 1);
 
     // Instance color buffer object
-    if (!m_colors.empty()) {
+    if (!m_colors.empty())
+    {
         glBindBuffer(GL_ARRAY_BUFFER, m_color_buffer_object);
         glBufferData(GL_ARRAY_BUFFER, m_colors.size() * sizeof(vec3), m_colors.data(), GL_STATIC_DRAW);
 
@@ -155,13 +162,15 @@ void MeshInstances::render() {
         glVertexAttribDivisor(7, 1);
     }
 
-    if (m_use_texture) {
+    if (m_use_texture)
+    {
         m_texture.enable();
     }
 
     glDrawArraysInstanced(GL_TRIANGLES, 0, m_num_vertices, m_models.size());
 
-    if (m_use_texture) {
+    if (m_use_texture)
+    {
         m_texture.disable();
     }
 
@@ -171,22 +180,26 @@ void MeshInstances::render() {
 
 /* add_transform
  */
-void MeshInstances::add_transform(Transform transform) {
+void MeshInstances::add_transform(Transform transform)
+{
     m_models.push_back(build_model_matrix(transform));
 }
 
 /* set_transforms
  */
-void MeshInstances::set_transforms(std::vector<Transform> transforms) {
+void MeshInstances::set_transforms(std::vector<Transform> transforms)
+{
     m_models.clear();
 
-    for (const Transform &transform : transforms) {
+    for (const Transform &transform : transforms)
+    {
         m_models.push_back(build_model_matrix(transform));
     }
 }
 
 /* set_colors
  */
-void MeshInstances::set_colors(std::vector<vec3> colors) {
+void MeshInstances::set_colors(std::vector<vec3> colors)
+{
     m_colors = colors;
 }

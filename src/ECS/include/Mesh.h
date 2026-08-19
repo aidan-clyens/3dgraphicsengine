@@ -14,14 +14,15 @@
 #include "Shader.h"
 #include "Texture.h"
 
-
-typedef struct {
+typedef struct
+{
     float *data;
     size_t size;
     unsigned int stride;
 } Buffer;
 
-typedef struct {
+typedef struct
+{
     vec3 vertex;
     vec3 normal;
     vec2 uv;
@@ -33,66 +34,67 @@ class MeshInstances;
 
 /* Mesh
  */
-class Mesh : public Component {
+class Mesh : public Component
+{
     friend class Renderer;
     friend class MeshInstances;
 
-    public:
-        Mesh();
-        Mesh(std::vector<Vertex> vertices);
-        virtual ~Mesh();
+public:
+    Mesh();
+    Mesh(std::vector<Vertex> vertices);
+    virtual ~Mesh();
 
-        virtual void render();
+    virtual void render();
 
-        virtual bool has_instance_colors() const { return false; }
+    virtual bool has_instance_colors() const { return false; }
 
-        void set_transform(Transform transform);
+    void set_transform(Transform transform);
 
-        void set_shader(Shader &shader);
-        void set_texture(Texture texture);
-        void set_material(Material material);
+    void set_shader(Shader &shader);
+    void set_texture(Texture texture);
+    void set_material(Material material);
 
-        Material get_material() const;
-        Texture get_texture() const;
+    Material get_material() const;
+    Texture get_texture() const;
 
-        bool has_shader() const;
-        bool has_texture() const;
+    bool has_shader() const;
+    bool has_texture() const;
 
-        eMaterialType get_material_type() const;
+    eMaterialType get_material_type() const;
 
-        unsigned int get_num_vertices() const;
+    unsigned int get_num_vertices() const;
 
-        void dump_vertices();
-        void dump_normals();
+    void dump_vertices();
+    void dump_normals();
 
-        std::string to_string();
+    std::string to_string();
 
-    protected:
-        void init_mesh();
-        virtual void create_mesh();
+protected:
+    void init_mesh();
+    virtual void create_mesh();
 
-        std::vector<Vertex> m_vertices;
+    std::vector<Vertex> m_vertices;
 
-        mat4 m_model;
+    mat4 m_model;
 
-        Material m_material;
+    Material m_material;
 
-        Buffer m_vertex_buffer;
-        Buffer m_normal_buffer;
-        Buffer m_uv_buffer;
+    Buffer m_vertex_buffer;
+    Buffer m_normal_buffer;
+    Buffer m_uv_buffer;
 
-        unsigned int m_num_vertices;
+    unsigned int m_num_vertices;
 
-        unsigned int m_vertex_buffer_object;
-        unsigned int m_vertex_array_object;
-        unsigned int m_element_buffer_object;
-        unsigned int m_instance_buffer_object;
+    unsigned int m_vertex_buffer_object;
+    unsigned int m_vertex_array_object;
+    unsigned int m_element_buffer_object;
+    unsigned int m_instance_buffer_object;
 
-        bool m_use_shader;
-        bool m_use_texture;
+    bool m_use_shader;
+    bool m_use_texture;
 
-        Shader m_shader;
-        Texture m_texture;
+    Shader m_shader;
+    Texture m_texture;
 
-        eMaterialType m_material_type;
+    eMaterialType m_material_type;
 };

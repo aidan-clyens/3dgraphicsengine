@@ -1,24 +1,21 @@
 #include "Mesh.h"
 
-
 /* Mesh
  */
-Mesh::Mesh():
-m_num_vertices(0),
-m_use_shader(false),
-m_use_texture(false),
-m_material_type(MATERIAL_COLOR)
+Mesh::Mesh() : m_num_vertices(0),
+               m_use_shader(false),
+               m_use_texture(false),
+               m_material_type(MATERIAL_COLOR)
 {
     this->init_mesh();
 }
 
 /* Mesh
  */
-Mesh::Mesh(std::vector<Vertex> vertices):
-m_num_vertices(vertices.size()),
-m_use_shader(false),
-m_use_texture(false),
-m_material_type(MATERIAL_COLOR)
+Mesh::Mesh(std::vector<Vertex> vertices) : m_num_vertices(vertices.size()),
+                                           m_use_shader(false),
+                                           m_use_texture(false),
+                                           m_material_type(MATERIAL_COLOR)
 {
     m_vertices = vertices;
     this->init_mesh();
@@ -27,7 +24,8 @@ m_material_type(MATERIAL_COLOR)
 
 /* ~Mesh
  */
-Mesh::~Mesh() {
+Mesh::~Mesh()
+{
     glDeleteBuffers(1, &m_vertex_buffer_object);
     glDeleteBuffers(1, &m_element_buffer_object);
     glDeleteBuffers(1, &m_instance_buffer_object);
@@ -40,7 +38,8 @@ Mesh::~Mesh() {
 
 /* render
  */
-void Mesh::init_mesh() {
+void Mesh::init_mesh()
+{
     // Create VBO and VAO
     glGenVertexArrays(1, &m_vertex_array_object);
     glGenBuffers(1, &m_vertex_buffer_object);
@@ -64,7 +63,8 @@ void Mesh::init_mesh() {
 
 /* create_mesh
  */
-void Mesh::create_mesh() {
+void Mesh::create_mesh()
+{
     if (m_num_vertices == 0)
         return;
 
@@ -82,34 +82,38 @@ void Mesh::create_mesh() {
 
     // Vertices
     int index = 0;
-    for (unsigned int i = 0; i < m_vertex_buffer.stride * m_num_vertices; i += m_vertex_buffer.stride) {
+    for (unsigned int i = 0; i < m_vertex_buffer.stride * m_num_vertices; i += m_vertex_buffer.stride)
+    {
         m_vertex_buffer.data[i] = m_vertices[index].vertex.x;
-        m_vertex_buffer.data[i+1] = m_vertices[index].vertex.y;
-        m_vertex_buffer.data[i+2] = m_vertices[index].vertex.z;
+        m_vertex_buffer.data[i + 1] = m_vertices[index].vertex.y;
+        m_vertex_buffer.data[i + 2] = m_vertices[index].vertex.z;
         index++;
     }
 
     // Normals
     index = 0;
-    for (unsigned int i = 0; i < m_normal_buffer.stride * m_num_vertices; i += m_normal_buffer.stride) {
+    for (unsigned int i = 0; i < m_normal_buffer.stride * m_num_vertices; i += m_normal_buffer.stride)
+    {
         m_normal_buffer.data[i] = m_vertices[index].normal.x;
-        m_normal_buffer.data[i+1] = m_vertices[index].normal.y;
-        m_normal_buffer.data[i+2] = m_vertices[index].normal.z;
+        m_normal_buffer.data[i + 1] = m_vertices[index].normal.y;
+        m_normal_buffer.data[i + 2] = m_vertices[index].normal.z;
         index++;
     }
 
     // UVs
     index = 0;
-    for (unsigned int i = 0; i < m_uv_buffer.stride * m_num_vertices; i += m_uv_buffer.stride) {
+    for (unsigned int i = 0; i < m_uv_buffer.stride * m_num_vertices; i += m_uv_buffer.stride)
+    {
         m_uv_buffer.data[i] = m_vertices[index].uv.x;
-        m_uv_buffer.data[i+1] = m_vertices[index].uv.y;
+        m_uv_buffer.data[i + 1] = m_vertices[index].uv.y;
         index++;
     }
 }
 
 /* render
  */
-void Mesh::render() {
+void Mesh::render()
+{
     if (m_num_vertices == 0)
         return;
 
@@ -152,13 +156,15 @@ void Mesh::render() {
     glVertexAttribDivisor(5, 1);
     glVertexAttribDivisor(6, 1);
 
-    if (m_use_texture) {
+    if (m_use_texture)
+    {
         m_texture.enable();
     }
 
     glDrawArrays(GL_TRIANGLES, 0, m_num_vertices);
 
-    if (m_use_texture) {
+    if (m_use_texture)
+    {
         m_texture.disable();
     }
 
@@ -168,7 +174,8 @@ void Mesh::render() {
 
 /* set_transform
  */
-void Mesh::set_transform(Transform transform) {
+void Mesh::set_transform(Transform transform)
+{
     Component::set_transform(transform);
 
     // Create transformations
@@ -184,76 +191,88 @@ void Mesh::set_transform(Transform transform) {
 
 /* set_shader
  */
-void Mesh::set_shader(Shader &shader) {
+void Mesh::set_shader(Shader &shader)
+{
     m_shader = shader;
     m_use_shader = true;
 }
 
 /* set_texture
  */
-void Mesh::set_texture(Texture texture) {
+void Mesh::set_texture(Texture texture)
+{
     m_texture = texture;
     m_use_texture = true;
 
-    switch (m_texture.get_texture_type()) {
-        case GL_TEXTURE_2D:
-            m_material_type = MATERIAL_TEXTURE_2D;
-            break;
-        case GL_TEXTURE_CUBE_MAP:
-            m_material_type = MATERIAL_TEXTURE_CUBE;
-            break;
-        default:
-            m_material_type = MATERIAL_COLOR;
-            break;
+    switch (m_texture.get_texture_type())
+    {
+    case GL_TEXTURE_2D:
+        m_material_type = MATERIAL_TEXTURE_2D;
+        break;
+    case GL_TEXTURE_CUBE_MAP:
+        m_material_type = MATERIAL_TEXTURE_CUBE;
+        break;
+    default:
+        m_material_type = MATERIAL_COLOR;
+        break;
     }
 }
 
 /* set_material
  */
-void Mesh::set_material(Material material) {
+void Mesh::set_material(Material material)
+{
     m_material = material;
 }
 
 /* get_material
  */
-Material Mesh::get_material() const {
+Material Mesh::get_material() const
+{
     return m_material;
 }
 
 /* get_texture
  */
-Texture Mesh::get_texture() const {
+Texture Mesh::get_texture() const
+{
     return m_texture;
 }
 
 /* has_shader
  */
-bool Mesh::has_shader() const {
+bool Mesh::has_shader() const
+{
     return m_use_shader;
 }
 
 /* has_texture
  */
-bool Mesh::has_texture() const {
+bool Mesh::has_texture() const
+{
     return m_use_texture;
 }
 
 /* get_material_type
  */
-eMaterialType Mesh::get_material_type() const {
+eMaterialType Mesh::get_material_type() const
+{
     return m_material_type;
 }
 
 /* get_num_vertices
  */
-unsigned int Mesh::get_num_vertices() const {
+unsigned int Mesh::get_num_vertices() const
+{
     return m_num_vertices;
 }
 
 /* dump_vertices
  */
-void Mesh::dump_vertices() {
-    for (unsigned int i = 0; i < m_vertices.size(); i++) {
+void Mesh::dump_vertices()
+{
+    for (unsigned int i = 0; i < m_vertices.size(); i++)
+    {
         std::cout << m_vertices[i].vertex.x << ", " << m_vertices[i].vertex.y << ", " << m_vertices[i].vertex.z << "," << std::endl;
     }
     std::cout << std::endl;
@@ -261,17 +280,21 @@ void Mesh::dump_vertices() {
 
 /* dump_normals
  */
-void Mesh::dump_normals() {
-    for (unsigned int i = 0; i < m_vertices.size(); i++) {
+void Mesh::dump_normals()
+{
+    for (unsigned int i = 0; i < m_vertices.size(); i++)
+    {
         std::cout << m_vertices[i].normal.x << ", " << m_vertices[i].normal.y << ", " << m_vertices[i].normal.z << "," << std::endl;
     }
     std::cout << std::endl;
 }
 
-std::string Mesh::to_string() {
+std::string Mesh::to_string()
+{
     std::string ret = "Mesh(";
     ret += "vertices=" + std::to_string(m_num_vertices);
-    if (has_shader()) {
+    if (has_shader())
+    {
         ret += ", ";
         ret += "shader=" + m_shader.to_string();
     }
