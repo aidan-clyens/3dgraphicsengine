@@ -16,9 +16,6 @@ target_sources(${PROJECT_NAME}
         include/Light.h
         include/Object3D.h
         include/Renderer.h
-        include/Cube.h
-        include/Square.h
-        include/Circle.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
@@ -30,9 +27,6 @@ target_sources(${PROJECT_NAME} PRIVATE
     src/Light.cpp
     src/Object3D.cpp
     src/Renderer.cpp
-    src/Cube.cpp
-    src/Square.cpp
-    src/Circle.cpp
 )
 
 if(BUILD_BULLET3)

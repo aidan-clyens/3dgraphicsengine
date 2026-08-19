@@ -1,6 +1,7 @@
 // Includes
 #include "Engine.h"
 #include "Object3D.h"
+#include "Square.h"
 
 #include <iostream>
 

@@ -93,6 +93,7 @@ set(3DGRAPHICSENGINE_INSTALL_TARGETS
     ECS
     Texture
     Mesh
+    Primitives
     glad
     glm
     glm-header-only

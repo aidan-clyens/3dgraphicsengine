@@ -5,6 +5,8 @@
 #include "TextureCubeMap.h"
 #include "Light.h"
 #include "Timer.h"
+#include "Cube.h"
+#include "Square.h"
 #include "Logger.h"
 
 #include <iostream>

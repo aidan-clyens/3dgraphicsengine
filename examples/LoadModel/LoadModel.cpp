@@ -4,6 +4,7 @@
 #include "TextureCubeMap.h"
 #include "Light.h"
 #include "Timer.h"
+#include "Cube.h"
 
 #include <iostream>
 

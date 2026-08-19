@@ -14,9 +14,6 @@
 #endif
 #include "Light.h"
 #include "DebugWindow.h"
-#include "Cube.h"
-#include "Square.h"
-#include "Circle.h"
 
 #include <string>
 #include <vector>
