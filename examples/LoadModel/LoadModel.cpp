@@ -109,12 +109,12 @@ public:
         transform.rotation = vec3(0, 0, 0);
         transform.size = vec3(50, 1, 50);
 
-        Object3D *object = new Cube(transform, GREY, 4);
+        Object3D *object = Object3DFactory::create<Cube>(transform, GREY, 4);
         object->set_name("Ground");
         this->add_object(object);
 
         // Skybox
-        this->set_skybox(new Cube(Transform(), m_skybox_texture));
+        this->set_skybox(Object3DFactory::create<Cube>(Transform(), m_skybox_texture));
 
         // Model
         transform.position = vec3(0, 0, 0);

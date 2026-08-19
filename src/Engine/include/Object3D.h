@@ -42,6 +42,12 @@ std::ostream &operator<<(std::ostream &os, const Object3D &obj);
 class Object3DFactory
 {
 public:
+  template <typename T, typename... Args>
+  static T *create(Args &&...args)
+  {
+    return new T(std::forward<Args>(args)...);
+  }
+
   static Object3D *create_object();
   static Object3D *create_object(vec3 position, vec3 rotation, vec3 size);
 };

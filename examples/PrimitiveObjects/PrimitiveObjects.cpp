@@ -8,7 +8,7 @@ public:
   {
     this->disable_debug_window();
 
-    p_cube = new Cube();
+    p_cube = Object3DFactory::create<Cube>();
     this->add_object(p_cube);
   }
 

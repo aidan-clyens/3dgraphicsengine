@@ -139,19 +139,19 @@ public:
         transform.rotation = vec3(0, 0, 0);
         transform.size = vec3(20, 1, 20);
 
-        Object3D *object = new Cube(transform, GREY, 4);
+        Object3D *object = Object3DFactory::create<Cube>(transform, GREY, 4);
         object->set_name("Ground");
         this->add_object(object);
 
         // Skybox
-        this->set_skybox(new Cube(Transform(), m_skybox_texture));
+        this->set_skybox(Object3DFactory::create<Cube>(Transform(), m_skybox_texture));
 
         // Cube 1
         transform.position = vec3(0, -1, -3);
         transform.rotation = vec3(0, 30, 0);
         transform.size = vec3(1, 1, 1);
 
-        object = new Cube(transform, m_texture_cube);
+        object = Object3DFactory::create<Cube>(transform, m_texture_cube);
         object->set_name("Cube 1");
         this->add_object(object);
 
@@ -160,7 +160,7 @@ public:
         transform.rotation = vec3(0, -10, 0);
         transform.size = vec3(1, 4, 1);
 
-        object = new Cube(transform, BLUE, 4);
+        object = Object3DFactory::create<Cube>(transform, BLUE, 4);
         object->set_name("Cube 2");
         this->add_object(object);
 
