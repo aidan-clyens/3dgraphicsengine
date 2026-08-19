@@ -1,1 +1,0 @@
-docker exec -it 3dgraphicsengine /bin/bash
