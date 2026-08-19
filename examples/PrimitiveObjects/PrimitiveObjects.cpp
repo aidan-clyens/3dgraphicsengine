@@ -8,12 +8,16 @@ public:
   {
     this->disable_debug_window();
 
-    this->add_object(new Cube());
+    p_cube = new Cube();
+    this->add_object(p_cube);
   }
 
   void update()
   {
   }
+
+private:
+  Cube *p_cube;
 };
 
 int main(int argc, char **argv)

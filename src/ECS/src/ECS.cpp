@@ -69,15 +69,9 @@ vec3 Component::get_position() const
     return m_transform.position;
 }
 
-/* Entity
- */
-Entity::Entity() : p_entity_manager(nullptr)
-{
-}
-
 /* ~Entity
  */
-Entity::~Entity()
+IEntity::~IEntity()
 {
     for (auto &pair : m_components)
     {
@@ -87,7 +81,7 @@ Entity::~Entity()
 
 /* add_component
  */
-void Entity::add_component(int id, Component *component)
+void IEntity::add_component(int id, Component *component)
 {
     m_components[id] = component;
     if (p_entity_manager != nullptr)
@@ -98,7 +92,7 @@ void Entity::add_component(int id, Component *component)
 
 /* remove_component
  */
-void Entity::remove_component(int id)
+void IEntity::remove_component(int id)
 {
     if (this->has_component(id))
     {
@@ -112,35 +106,35 @@ void Entity::remove_component(int id)
 
 /* get_component
  */
-Component *Entity::get_component(int id)
+Component *IEntity::get_component(int id)
 {
     return m_components[id];
 }
 
 /* has_component
  */
-bool Entity::has_component(int id)
+bool IEntity::has_component(int id)
 {
     return (m_components.find(id) != m_components.end());
 }
 
 /* assign_entity_manager
  */
-void Entity::assign_entity_manager(EntityManager *manager)
+void IEntity::assign_entity_manager(EntityManager *manager)
 {
     p_entity_manager = manager;
 }
 
 /* get_transform
  */
-Transform Entity::get_transform() const
+Transform IEntity::get_transform() const
 {
     return m_transform;
 }
 
 /* set_transform
  */
-void Entity::set_transform(Transform transform)
+void IEntity::set_transform(Transform transform)
 {
     m_transform = transform;
 

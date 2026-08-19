@@ -5,7 +5,7 @@
 
 /* DynamicCharacterController
  */
-DynamicCharacterController::DynamicCharacterController(Entity *object, float mass):
+DynamicCharacterController::DynamicCharacterController(IEntity *object, float mass):
 Rigidbody(object, mass, true),
 m_velocity(0, 0, 0),
 m_previous_position(0, 0, 0),

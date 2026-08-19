@@ -206,7 +206,7 @@ public:
     Object3D *create_point_light(vec3 position, vec3 ambient, vec3 diffuse, vec3 specular, ePointLightDistance strength)
     {
         // Create object
-        Object3D *light_object = new Object3D(position, vec3(0.0f, 0.0f, 0.0f), vec3(1.0f, 1.0f, 1.0f));
+        Object3D *light_object = this->create_empty_object(position, vec3(0.0f, 0.0f, 0.0f), vec3(1.0f, 1.0f, 1.0f));
         light_object->add_component(COMP_LIGHT, new PointLight());
 
         PointLight *light = (PointLight *)light_object->get_component(COMP_LIGHT);
@@ -222,7 +222,7 @@ public:
      */
     Object3D *create_camera(vec3 position)
     {
-        Object3D *camera = new Object3D();
+        Object3D *camera = this->create_empty_object();
         camera->set_position(position);
         camera->add_component(COMP_CAMERA, new Camera(position));
 

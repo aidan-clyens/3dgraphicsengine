@@ -46,7 +46,7 @@ class IgnoreBodyAndGhostCast : public btCollisionWorld::ClosestRayResultCallback
  */
 class DynamicCharacterController : public Rigidbody {
     public:
-        DynamicCharacterController(Entity *object, float mass);
+        DynamicCharacterController(IEntity *object, float mass);
 
         void move(vec2 direction);
         void jump();

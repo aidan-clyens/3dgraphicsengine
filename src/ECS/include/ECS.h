@@ -29,7 +29,7 @@ typedef struct
 std::string transform_to_string(const Transform &transform);
 
 // Forward Declarations
-class Entity;
+class IEntity;
 
 /* Component
  */
@@ -54,8 +54,8 @@ protected:
 class EntityManager
 {
 public:
-    virtual void handle_add_component(Entity *entity, eComponentType type) = 0;
-    virtual void handle_remove_component(Entity *entity, eComponentType type) = 0;
+    virtual void handle_add_component(IEntity *entity, eComponentType type) = 0;
+    virtual void handle_remove_component(IEntity *entity, eComponentType type) = 0;
 };
 
 // Typedefs
@@ -64,11 +64,10 @@ typedef std::unordered_map<int, Component *>::iterator ComponentMapIterator;
 
 /* Entity
  */
-class Entity
+class IEntity
 {
 public:
-    Entity();
-    virtual ~Entity();
+    virtual ~IEntity();
 
     void add_component(int id, Component *component);
     void remove_component(int id);
@@ -81,8 +80,10 @@ public:
     Transform get_transform() const;
     void set_transform(Transform transform);
 
+    virtual std::string to_string() const = 0;
+
 protected:
-    EntityManager *p_entity_manager;
+    EntityManager *p_entity_manager = nullptr;
     ComponentMap m_components;
 
     Transform m_transform;

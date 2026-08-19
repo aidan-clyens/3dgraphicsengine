@@ -15,9 +15,7 @@ Cube::Cube()
   material.diffuse = vec3(255, 255, 255);
   material.shininess = 1;
 
-  this->add_component(COMP_MESH, new CubeMesh());
-
-  CubeMesh *mesh = (CubeMesh *)this->get_component(COMP_MESH);
+  CubeMesh *mesh = this->add_cube_mesh();
   mesh->set_material(material);
   mesh->set_transform(transform);
 }
@@ -32,9 +30,7 @@ Cube::Cube(Transform transform, vec3 color, int shininess) : Object3D(transform.
   material.diffuse = color;
   material.shininess = shininess;
 
-  this->add_component(COMP_MESH, new CubeMesh());
-
-  CubeMesh *mesh = (CubeMesh *)this->get_component(COMP_MESH);
+  CubeMesh *mesh = this->add_cube_mesh();
   mesh->set_material(material);
   mesh->set_transform(transform);
 }
@@ -43,9 +39,13 @@ Cube::Cube(Transform transform, vec3 color, int shininess) : Object3D(transform.
  */
 Cube::Cube(Transform transform, Texture texture) : Object3D(transform.position, transform.rotation, transform.size)
 {
-  this->add_component(COMP_MESH, new CubeMesh());
-
-  CubeMesh *mesh = (CubeMesh *)this->get_component(COMP_MESH);
+  CubeMesh *mesh = this->add_cube_mesh();
   mesh->set_texture(texture);
   mesh->set_transform(transform);
+}
+
+CubeMesh *Cube::add_cube_mesh()
+{
+  this->add_component(COMP_MESH, new CubeMesh());
+  return (CubeMesh *)this->get_component(COMP_MESH);
 }

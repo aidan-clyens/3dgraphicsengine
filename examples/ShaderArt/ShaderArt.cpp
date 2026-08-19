@@ -52,7 +52,7 @@ public:
   Object3D *create_square(Transform transform, Shader &shader)
   {
     // Create object
-    Object3D *square = new Object3D(transform.position, transform.rotation, transform.size);
+    Object3D *square = this->create_empty_object(transform.position, transform.rotation, transform.size);
     square->add_component(COMP_MESH, new SquareMesh());
 
     SquareMesh *mesh = (SquareMesh *)square->get_component(COMP_MESH);

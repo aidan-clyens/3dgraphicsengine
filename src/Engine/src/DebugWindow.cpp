@@ -105,7 +105,7 @@ void DebugWindow::show_window(bool *open)
 
         if (ImGui::Button("New Object", BUTTON_SIZE))
         {
-            p_engine->add_object(new Object3D());
+            p_engine->create_empty_object();
         }
     }
 

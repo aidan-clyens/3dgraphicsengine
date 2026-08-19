@@ -48,6 +48,8 @@ public:
     void remove_object(Object3D *object);
     void get_objects(std::vector<Object3D *> &objects);
 
+    Object3D *create_empty_object();
+    Object3D *create_empty_object(vec3 position, vec3 rotation, vec3 size);
     Object3D *create_model(Transform transform, const std::string &path);
 
     void set_directional_light(DirectionalLight light);
@@ -85,8 +87,8 @@ public:
     LightingInfo get_lighting_info() const;
     void set_lighting_info(LightingInfo info);
 
-    void handle_add_component(Entity *entity, eComponentType type);
-    void handle_remove_component(Entity *entity, eComponentType type);
+    void handle_add_component(IEntity *entity, eComponentType type);
+    void handle_remove_component(IEntity *entity, eComponentType type);
 
 protected:
     InputManager *p_input_manager;

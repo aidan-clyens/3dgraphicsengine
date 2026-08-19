@@ -8,7 +8,7 @@
 /* Engine
  */
 Engine::Engine(int width, int height, const std::string &path) : p_input_manager(InputManager::get_instance()),
-                                                                 p_camera(new Camera(vec3(0, 0, 0))),
+                                                                 p_camera(new Camera(vec3(0, 0, 5))),
                                                                  m_renderer(width, height, path)
 {
 }
@@ -175,11 +175,21 @@ void Engine::get_objects(std::vector<Object3D *> &objects)
     objects = m_objects;
 }
 
+Object3D *Engine::create_empty_object()
+{
+    return Object3DFactory::create_object();
+}
+
+Object3D *Engine::create_empty_object(vec3 position, vec3 rotation, vec3 size)
+{
+    return Object3DFactory::create_object(position, rotation, size);
+}
+
 /* create_model
  */
 Object3D *Engine::create_model(Transform transform, const std::string &path)
 {
-    Object3D *object = new Object3D(transform.position, transform.rotation, transform.size);
+    Object3D *object = this->create_empty_object();
     object->add_component(COMP_MODEL, new Model());
 
     Model *model = (Model *)object->get_component(COMP_MODEL);
@@ -338,7 +348,7 @@ void Engine::set_lighting_info(LightingInfo info)
 
 /* handle_add_component
  */
-void Engine::handle_add_component(Entity *entity, eComponentType type)
+void Engine::handle_add_component(IEntity *entity, eComponentType type)
 {
     LOG_INFO("Engine: handle_add_component - Adding Component type: ", component_type_to_string(type));
 
@@ -406,7 +416,7 @@ void Engine::handle_add_component(Entity *entity, eComponentType type)
 
 /* handle_remove_component
  */
-void Engine::handle_remove_component(Entity *entity, eComponentType type)
+void Engine::handle_remove_component(IEntity *entity, eComponentType type)
 {
     LOG_INFO("Engine: handle_remove_component - Removing Component type: ", type);
 

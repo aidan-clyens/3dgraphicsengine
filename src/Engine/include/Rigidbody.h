@@ -16,7 +16,7 @@ class Physics;
  */
 class Rigidbody : public Component {
     public:
-        Rigidbody(Entity *object, float mass, bool dynamic = false);
+        Rigidbody(IEntity *object, float mass, bool dynamic = false);
         virtual ~Rigidbody();
 
         virtual void update(float delta_time);
@@ -35,7 +35,7 @@ class Rigidbody : public Component {
         Physics *p_physics_world;
 
         btScalar m_mass;
-        Entity *p_object;
+        IEntity *p_object;
         btTransform m_transform;
         btDefaultMotionState *p_motion_state;
         btRigidBody *p_body;

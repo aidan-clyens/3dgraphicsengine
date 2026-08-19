@@ -4,7 +4,7 @@
 
 /* Rigidbody
  */
-Rigidbody::Rigidbody(Entity *object, float mass, bool dynamic):
+Rigidbody::Rigidbody(IEntity *object, float mass, bool dynamic):
 p_physics_world(nullptr),
 m_mass(btScalar(mass)),
 p_object(object),
