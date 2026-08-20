@@ -18,7 +18,7 @@ public:
      */
     void setup()
     {
-        this->set_mouse_visible(true);
+        this->enable_mouse_cursor();
         this->disable_debug_window();
         this->set_shadows_enabled(false);
 

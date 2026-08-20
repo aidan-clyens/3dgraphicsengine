@@ -78,7 +78,15 @@ public:
             {
                 m_mouse_enabled = !m_mouse_enabled;
                 m_debug_window_enabled = !m_debug_window_enabled;
-                this->set_mouse_visible(m_mouse_enabled);
+
+                if (m_mouse_enabled)
+                {
+                    this->enable_mouse_cursor();
+                }
+                else
+                {
+                    this->disable_mouse_cursor();
+                }
 
                 if (m_debug_window_enabled)
                 {
@@ -103,7 +111,7 @@ public:
         m_debug_window_enabled = false;
 
         this->disable_debug_window();
-        this->set_mouse_visible(m_mouse_enabled);
+        this->disable_mouse_cursor();
         this->set_shadows_enabled(true);
         this->set_background_color(SKY_BLUE);
 

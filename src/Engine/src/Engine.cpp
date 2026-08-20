@@ -248,11 +248,16 @@ Camera *Engine::get_camera()
     return p_camera;
 }
 
-/* set_mouse_visible
+/* enable_mouse_cursor
  */
-void Engine::set_mouse_visible(bool value)
+void Engine::enable_mouse_cursor()
 {
-    m_renderer.set_mouse_visible(value);
+    m_renderer.set_mouse_visible(true);
+}
+
+void Engine::disable_mouse_cursor()
+{
+    m_renderer.set_mouse_visible(false);
 }
 
 /* set_shadows_enabled

@@ -27,7 +27,7 @@ public:
     void setup()
     {
         p_camera->set_position(vec3(0, 0, 3));
-        // this->set_mouse_visible(false);
+        // this->disable_mouse_cursor();
 
         // Configure lighting
         m_material.ambient = GREY;

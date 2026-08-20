@@ -22,7 +22,7 @@ public:
   void setup()
   {
     this->disable_debug_window();
-    this->set_mouse_visible(true);
+    this->enable_mouse_cursor();
     this->set_shadows_enabled(false);
 
     m_shader.load("examples/ShaderArt/shaders/background_vertex.glsl", "examples/ShaderArt/shaders/background_fragment.glsl");

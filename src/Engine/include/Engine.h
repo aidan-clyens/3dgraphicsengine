@@ -62,7 +62,8 @@ public:
     void get_cameras(std::vector<Camera *> &cameras);
     Camera *get_camera();
 
-    void set_mouse_visible(bool value);
+    void enable_mouse_cursor();
+    void disable_mouse_cursor();
 
     void set_shadows_enabled(bool enable);
 

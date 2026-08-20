@@ -7,7 +7,9 @@ public:
   void setup()
   {
     this->disable_debug_window();
-    this->set_mouse_visible(true);
+    this->enable_mouse_cursor();
+
+    this->set_background_color(vec3(0.25, 0.08, 0));
 
     // Create Cube Primitive
     p_cube = Object3DFactory::create<Cube>();

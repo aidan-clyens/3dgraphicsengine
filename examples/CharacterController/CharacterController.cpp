@@ -73,7 +73,7 @@ public:
         vec3 player_pos = vec3(0, 5, 0);
 
         p_camera->set_position(player_pos);
-        this->set_mouse_visible(false);
+        this->disable_mouse_cursor();
 
         // Configure lighting
         m_material.ambient = GREY;
