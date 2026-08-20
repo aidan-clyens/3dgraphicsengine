@@ -96,7 +96,7 @@
                 "CharacterController",
                 "LoadModel",
                 "RigidBody",
-                "ShaderArt"
+                "PrimitiveObjects"
             ]
         }
     ]
