@@ -69,8 +69,12 @@ void DebugWindow::render_draw_data()
  */
 void DebugWindow::add_mouse_button_event(int button, int action)
 {
-    ImGuiIO &io = ImGui::GetIO();
-    io.AddMouseButtonEvent(button, (action == 1));
+    ImGui::GetIO().AddMouseButtonEvent(button, (action == 1));
+}
+
+void DebugWindow::add_mouse_position_event(int x, int y)
+{
+    ImGui::GetIO().AddMousePosEvent((float)x, (float)y);
 }
 
 /* want_capture_mouse

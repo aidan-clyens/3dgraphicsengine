@@ -61,6 +61,7 @@ public:
     void set_shadows_enabled(bool enable);
 
     void set_debug_window_enabled(bool enable);
+    bool is_debug_window_enabled() const { return m_enable_debug_window; }
 
     LightingInfo get_lighting_info() const;
     void set_lighting_info(LightingInfo info);

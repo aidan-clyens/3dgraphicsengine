@@ -26,6 +26,7 @@ public:
     static void render_draw_data();
 
     static void add_mouse_button_event(int button, int action);
+    static void add_mouse_position_event(int x, int y);
 
     static bool want_capture_mouse();
 
