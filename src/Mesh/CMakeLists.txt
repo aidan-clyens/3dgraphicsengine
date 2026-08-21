@@ -11,12 +11,14 @@ target_sources(${PROJECT_NAME}
         include/CubeMesh.h
         include/SquareMesh.h
         include/CircleMesh.h
+        include/GridMesh.h
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
     src/CubeMesh.cpp
     src/SquareMesh.cpp
     src/CircleMesh.cpp
+    src/GridMesh.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

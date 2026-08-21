@@ -96,7 +96,8 @@
                 "CharacterController",
                 "LoadModel",
                 "RigidBody",
-                "PrimitiveObjects"
+                "PrimitiveObjects",
+                "Terrain",
             ]
         }
     ]

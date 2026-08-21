@@ -64,9 +64,3 @@ CircleMesh::CircleMesh(unsigned int segments) {
         m_uv_buffer.data[uv_index++] = 0.5f + 0.5f * sinf(angle1);
     }
 }
-
-/* ~CircleMesh
- */
-CircleMesh::~CircleMesh() {
-
-}

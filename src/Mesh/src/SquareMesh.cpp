@@ -52,9 +52,3 @@ SquareMesh::SquareMesh() {
     memcpy(m_normal_buffer.data, square_normals, m_normal_buffer.size);
     memcpy(m_uv_buffer.data, square_uvs, m_uv_buffer.size);
 }
-
-/* ~SquareMesh
- */
-SquareMesh::~SquareMesh() {
-
-}

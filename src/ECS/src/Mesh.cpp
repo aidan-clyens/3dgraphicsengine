@@ -46,6 +46,10 @@ void Mesh::init_mesh()
     glGenBuffers(1, &m_element_buffer_object);
     glGenBuffers(1, &m_instance_buffer_object);
 
+    m_vertex_buffer.data = nullptr;
+    m_normal_buffer.data = nullptr;
+    m_uv_buffer.data = nullptr;
+
     // Initialize material lighting data
     m_material.ambient = vec3(1, 1, 1);
     m_material.diffuse = vec3(1, 1, 1);
@@ -67,6 +71,10 @@ void Mesh::create_mesh()
 {
     if (m_num_vertices == 0)
         return;
+
+    delete[] m_vertex_buffer.data;
+    delete[] m_normal_buffer.data;
+    delete[] m_uv_buffer.data;
 
     m_vertex_buffer.stride = 3;
     m_vertex_buffer.size = sizeof(float) * m_vertex_buffer.stride * m_num_vertices;
